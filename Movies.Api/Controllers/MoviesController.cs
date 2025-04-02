@@ -57,15 +57,15 @@ namespace Movies.Api.Controllers
             return Ok(movie.MapToMovieResponse());
         }
 
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteMovie(int id)
-        //{
-        //    var deletedMovie = await _moviesRepository.DeleteMovie(id);
-        //    if (deletedMovie == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(deletedMovie);
-        //}
+        [HttpDelete(ApiEndpoints.Movies.Delete)]
+        public async Task<IActionResult> DeleteMovie([FromRoute] Guid id)
+        {
+            var deleted = await _movieRepository.DeleteByIdAsync(id);
+            if (deleted == false)
+            {
+                return NotFound();
+            }
+            return NoContent();
+        }
     }
 }
