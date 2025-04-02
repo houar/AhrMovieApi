@@ -6,7 +6,6 @@ using Movies.Contracts.Requests;
 
 namespace Movies.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class MoviesController : ControllerBase
     {
@@ -24,7 +23,7 @@ namespace Movies.Api.Controllers
         //    return Ok(movies);
         //}
 
-        [HttpGet("{id}")]
+        [HttpGet(ApiEndpoints.Movies.Get)]
         public async Task<IActionResult> GetMovie(Guid id)
         {
             var movie = await _movieRepository.GetByIdAsync(id);
@@ -35,7 +34,7 @@ namespace Movies.Api.Controllers
             return Ok(movie);
         }
 
-        [HttpPost]
+        [HttpPost(ApiEndpoints.Movies.Create)]
         public async Task<IActionResult> AddMovie([FromBody] MovieReqCreate movieReq)
         {
             var movie = movieReq.MapToMovie();
