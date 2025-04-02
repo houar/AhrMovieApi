@@ -6,7 +6,8 @@
 
         public static class Movies
         {
-            private const string Base = ApiBase + "/movies";
+            private const string Base = $"{ApiBase}/movies";
+
             public const string GetAll = Base;
             public const string Get = $"{Base}/{{id}}";
             public const string Create = Base;
