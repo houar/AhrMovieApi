@@ -17,6 +17,17 @@ namespace Movies.Api.Mapping
             };
         }
 
+        public static Movie MapToMovie(this MovieReqUpdate movieReq, Guid id)
+        {
+            return new Movie
+            {
+                Id = id,
+                Title = movieReq.Title,
+                YearOfRelease = movieReq.YearOfRelease,
+                Genres = movieReq.Genres.ToList()
+            };
+        }
+
         public static MovieResponse MapToMovieResponse(this Movie movie)
         {
             return new MovieResponse

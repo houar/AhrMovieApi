@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Movies.Api.Mapping;
-using Movies.Application.Models;
 using Movies.Application.Repositories;
 using Movies.Contracts.Requests;
 
@@ -46,16 +45,17 @@ namespace Movies.Api.Controllers
             return CreatedAtAction(nameof(GetMovie), new { id = movie.Id }, movie.MapToMovieResponse());
         }
 
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> UpdateMovie(int id, [FromBody] Movie movie)
-        //{
-        //    var updatedMovie = await _moviesRepository.UpdateMovie(id, movie);
-        //    if (updatedMovie == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(updatedMovie);
-        //}
+        [HttpPut(ApiEndpoints.Movies.Update)]
+        public async Task<IActionResult> UpdateMovie([FromRoute] Guid id, [FromBody] MovieReqUpdate movieReq)
+        {
+            var movie = movieReq.MapToMovie(id);
+            var updated = await _movieRepository.UpdateAsync(movie);
+            if (updated == false)
+            {
+                return NotFound();
+            }
+            return Ok(movie.MapToMovieResponse());
+        }
 
         //[HttpDelete("{id}")]
         //public async Task<IActionResult> DeleteMovie(int id)
