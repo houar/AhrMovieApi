@@ -16,12 +16,12 @@ namespace Movies.Api.Controllers
             _movieRepository = movieRepository ?? throw new ArgumentNullException(nameof(movieRepository));
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> GetMovies()
-        //{
-        //    var movies = await _moviesRepository.GetMovies();
-        //    return Ok(movies);
-        //}
+        [HttpGet(ApiEndpoints.Movies.GetAll)]
+        public async Task<IActionResult> GetMovies()
+        {
+            var movies = await _movieRepository.GetMoviesAsync();
+            return Ok(movies.MapToMoviesResponse());
+        }
 
         [HttpGet(ApiEndpoints.Movies.Get)]
         public async Task<IActionResult> GetMovie(Guid id)
@@ -31,7 +31,7 @@ namespace Movies.Api.Controllers
             {
                 return NotFound();
             }
-            return Ok(movie);
+            return Ok(movie.MapToMovieResponse());
         }
 
         [HttpPost(ApiEndpoints.Movies.Create)]
@@ -43,7 +43,7 @@ namespace Movies.Api.Controllers
             {
                 return StatusCode(500, "An error occurred while creating the movie.");
             }
-            return CreatedAtAction(nameof(GetMovie), new { id = movie.Id }, movie);
+            return CreatedAtAction(nameof(GetMovie), new { id = movie.Id }, movie.MapToMovieResponse());
         }
 
         //[HttpPut("{id}")]
