@@ -33,6 +33,12 @@ namespace Movies.Application.Repositories
             return Task.FromResult(movie);
         }
 
+        public Task<Movie?> GetBySlugAsync(string slug)
+        {
+            var movie = _movies.FirstOrDefault(m => m.Slug == slug);
+            return Task.FromResult(movie);
+        }
+
         public Task<IEnumerable<Movie>> GetMoviesAsync()
         {
             return Task.FromResult(_movies.AsEnumerable());

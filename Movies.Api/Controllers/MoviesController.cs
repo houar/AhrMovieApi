@@ -23,9 +23,11 @@ namespace Movies.Api.Controllers
         }
 
         [HttpGet(ApiEndpoints.Movies.Get)]
-        public async Task<IActionResult> GetMovie(Guid id)
+        public async Task<IActionResult> GetMovie([FromRoute] string idOrSlug)
         {
-            var movie = await _movieRepository.GetByIdAsync(id);
+            var movie = Guid.TryParse(idOrSlug, out var id)
+                ? await _movieRepository.GetByIdAsync(id)
+                : await _movieRepository.GetBySlugAsync(idOrSlug);
             if (movie == null)
             {
                 return NotFound();
@@ -42,7 +44,7 @@ namespace Movies.Api.Controllers
             {
                 return StatusCode(500, "An error occurred while creating the movie.");
             }
-            return CreatedAtAction(nameof(GetMovie), new { id = movie.Id }, movie.MapToMovieResponse());
+            return CreatedAtAction(nameof(GetMovie), new { idOrSlug = movie.Id }, movie.MapToMovieResponse());
         }
 
         [HttpPut(ApiEndpoints.Movies.Update)]
