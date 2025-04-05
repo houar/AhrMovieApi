@@ -1,0 +1,14 @@
+﻿# version: '3.8'
+# docker compose -f .\Movies.Application/docker-compose.yml up
+
+services:
+
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=superdoopersecret
+      - POSTGRES_DB=moviesdb
+    ports:
+      - "5432:5432"
