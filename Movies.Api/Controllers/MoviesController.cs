@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Movies.Api.Mapping;
-using Movies.Application.Repositories;
+using Movies.Application.Services;
 using Movies.Contracts.Requests;
 
 namespace Movies.Api.Controllers
@@ -8,17 +8,17 @@ namespace Movies.Api.Controllers
     [ApiController]
     public class MoviesController : ControllerBase
     {
-        private readonly IMovieRepository _movieRepository;
+        private readonly IMovieService _movieService;
 
-        public MoviesController(IMovieRepository movieRepository)
+        public MoviesController(IMovieService movieService)
         {
-            _movieRepository = movieRepository ?? throw new ArgumentNullException(nameof(movieRepository));
+            _movieService = movieService ?? throw new ArgumentNullException(nameof(movieService));
         }
 
         [HttpGet(ApiEndpoints.Movies.GetAll)]
         public async Task<IActionResult> GetMovies()
         {
-            var movies = await _movieRepository.GetMoviesAsync();
+            var movies = await _movieService.GetMoviesAsync();
             return Ok(movies.MapToMoviesResponse());
         }
 
@@ -26,8 +26,8 @@ namespace Movies.Api.Controllers
         public async Task<IActionResult> GetMovie([FromRoute] string idOrSlug)
         {
             var movie = Guid.TryParse(idOrSlug, out var id)
-                ? await _movieRepository.GetByIdAsync(id)
-                : await _movieRepository.GetBySlugAsync(idOrSlug);
+                ? await _movieService.GetByIdAsync(id)
+                : await _movieService.GetBySlugAsync(idOrSlug);
             if (movie == null)
             {
                 return NotFound();
@@ -39,7 +39,7 @@ namespace Movies.Api.Controllers
         public async Task<IActionResult> AddMovie([FromBody] MovieReqCreate movieReq)
         {
             var movie = movieReq.MapToMovie();
-            var created = await _movieRepository.CreateAsync(movie);
+            var created = await _movieService.CreateAsync(movie);
             if (created == false)
             {
                 return StatusCode(500, "An error occurred while creating the movie.");
@@ -51,18 +51,18 @@ namespace Movies.Api.Controllers
         public async Task<IActionResult> UpdateMovie([FromRoute] Guid id, [FromBody] MovieReqUpdate movieReq)
         {
             var movie = movieReq.MapToMovie(id);
-            var updated = await _movieRepository.UpdateAsync(movie);
-            if (updated == false)
+            var updated = await _movieService.UpdateAsync(movie);
+            if (updated == null)
             {
                 return NotFound();
             }
-            return Ok(movie.MapToMovieResponse());
+            return Ok(updated.MapToMovieResponse());
         }
 
         [HttpDelete(ApiEndpoints.Movies.Delete)]
         public async Task<IActionResult> DeleteMovie([FromRoute] Guid id)
         {
-            var deleted = await _movieRepository.DeleteByIdAsync(id);
+            var deleted = await _movieService.DeleteByIdAsync(id);
             if (deleted == false)
             {
                 return NotFound();
