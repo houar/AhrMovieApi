@@ -127,10 +127,10 @@ namespace Movies.Application.Repositories
             }
 
             var updated = await connection.ExecuteAsync(new CommandDefinition("UPDATE Movies SET" +
-                " id = @Id," +
                 " slug = @Slug," +
                 " title = @Title," +
-                " yearofrelease = @YearOfRelease", movie, cancellationToken: token));
+                " yearofrelease = @YearOfRelease" +
+                " WHERE id = @Id", movie, cancellationToken: token));
 
             transaction.Commit();
             return updated > 0;
