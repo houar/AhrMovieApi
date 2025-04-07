@@ -9,6 +9,9 @@
     <Project Path="Movies.Application/Movies.Application.csproj" />
     <Project Path="Movies.Contracts/Movies.Contracts.csproj" />
   </Folder>
+  <Folder Name="/02.Idp/" Id="02ea681e-c7d8-13c7-8484-4ac65e1b71e8">
+    <Project Path="Identity.Api/Identity.Api.csproj" Id="7e25c805-55c8-4665-9a5b-faff094fe827" />
+  </Folder>
   <Folder Name="/Helpers/">
     <File Path="Helpers/Course.postman_collection.json" />
     <File Path="Helpers/movies.json" />
