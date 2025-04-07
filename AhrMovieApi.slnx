@@ -1,0 +1,16 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/01.Movies/">
+    <Project Path="Movies.Api/Movies.Api.csproj" />
+    <Project Path="Movies.Application/Movies.Application.csproj" />
+    <Project Path="Movies.Contracts/Movies.Contracts.csproj" />
+  </Folder>
+  <Folder Name="/Helpers/">
+    <File Path="Helpers/Course.postman_collection.json" />
+    <File Path="Helpers/movies.json" />
+  </Folder>
+</Solution>
