@@ -38,7 +38,7 @@ namespace Movies.Api.Controllers
             return Ok(movie.MapToMovieResponse());
         }
 
-        [Authorize(AuthConstants.AdminUserPolicyName)]
+        [Authorize(AuthConstants.AdminOrTrustedPolicyName)]
         [HttpPost(ApiEndpoints.Movies.Create)]
         public async Task<IActionResult> AddMovie([FromBody] MovieReqCreate movieReq, CancellationToken token)
         {
@@ -51,7 +51,7 @@ namespace Movies.Api.Controllers
             return CreatedAtAction(nameof(GetMovie), new { idOrSlug = movie.Id }, movie.MapToMovieResponse());
         }
 
-        [Authorize(AuthConstants.AdminUserPolicyName)]
+        [Authorize(AuthConstants.AdminOrTrustedPolicyName)]
         [HttpPut(ApiEndpoints.Movies.Update)]
         public async Task<IActionResult> UpdateMovie([FromRoute] Guid id, [FromBody] MovieReqUpdate movieReq, CancellationToken token)
         {

@@ -39,8 +39,13 @@ builder.Services.AddAuthorization(options =>
         //policy.RequireAuthenticatedUser();
         policy.RequireClaim(AuthConstants.AdminUserClaimName, AuthConstants.AdminUserClaimValue);
     });
-}
-);
+    options.AddPolicy(AuthConstants.AdminOrTrustedPolicyName, policy =>
+    {
+        policy.RequireAssertion(ctx =>
+        ctx.User.HasClaim(claim => claim is { Type: AuthConstants.AdminUserClaimName, Value: AuthConstants.AdminUserClaimValue }) ||
+        ctx.User.HasClaim(claim => claim is { Type: AuthConstants.TrustedMemberClaimName, Value: AuthConstants.TrustedMemberClaimValue}));
+    });
+});
 builder.Services.AddControllers();
 builder.Services.AddMoviesApplication();
 builder.Services.AddMoviesDatabase(connectionString);
