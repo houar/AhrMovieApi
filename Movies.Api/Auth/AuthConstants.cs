@@ -1,4 +1,4 @@
-﻿namespace Movies.Api
+﻿namespace Movies.Api.Auth
 {
     internal class AuthConstants
     {
@@ -9,5 +9,7 @@
         internal const string AdminOrTrustedPolicyName = "Trusted";
         internal const string TrustedMemberClaimName = "trusted_member";
         internal const string TrustedMemberClaimValue = "true";
+
+        internal const string UserIdClaimName = "userid";
     }
 }

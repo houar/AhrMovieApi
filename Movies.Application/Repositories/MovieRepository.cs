@@ -59,7 +59,7 @@ namespace Movies.Application.Repositories
             return exists;
         }
 
-        public async Task<Movie?> GetByIdAsync(Guid id, CancellationToken token = default)
+        public async Task<Movie?> GetByIdAsync(Guid id, Guid? userId = default, CancellationToken token = default)
         {
             using var connection = await _dbConnectionFactory.CreateConnectionAsync(token);
             var movie = await connection.QuerySingleOrDefaultAsync<Movie>(new CommandDefinition("SELECT * FROM Movies" +
@@ -77,7 +77,7 @@ namespace Movies.Application.Repositories
             return movie;
         }
 
-        public async Task<Movie?> GetBySlugAsync(string slug, CancellationToken token = default)
+        public async Task<Movie?> GetBySlugAsync(string slug, Guid? userId = default, CancellationToken token = default)
         {
             using var connection = await _dbConnectionFactory.CreateConnectionAsync(token);
             var movie = await connection.QuerySingleOrDefaultAsync<Movie>(new CommandDefinition("SELECT * FROM Movies" +
@@ -95,7 +95,7 @@ namespace Movies.Application.Repositories
             return movie;
         }
 
-        public async Task<IEnumerable<Movie>> GetMoviesAsync(CancellationToken token = default)
+        public async Task<IEnumerable<Movie>> GetMoviesAsync(Guid? userId = default, CancellationToken token = default)
         {
             using var connection = await _dbConnectionFactory.CreateConnectionAsync(token);
             var results = await connection.QueryAsync(new CommandDefinition("SELECT mo.*, string_agg(ge.name, ',') as genres" +

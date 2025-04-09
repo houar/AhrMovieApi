@@ -25,6 +25,11 @@ namespace Movies.Application.Database
             await connection.ExecuteAsync("CREATE TABLE IF NOT EXISTS Genres (" +
                 " movieId UUID references movies (Id)," +
                 " name TEXT NOT NULL);");
+            await connection.ExecuteAsync("CREATE TABLE IF NOT EXISTS ratings (" +
+                " userId UUID," +
+                " movieId UUID REFERENCES movies (id)," +
+                " rating INTEGER NOT NULL," +
+                " PRIMARY KEY (userId, movieId));");
         }
     }
 }
