@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Movies.Api;
 using Movies.Api.Mapping;
 using Movies.Application;
 using Movies.Application.Database;
@@ -31,7 +32,15 @@ builder.Services
             ValidAudience = aud
         };
     });
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(AuthConstants.AdminUserPolicyName, policy =>
+    {
+        //policy.RequireAuthenticatedUser();
+        policy.RequireClaim(AuthConstants.AdminUserClaimName, AuthConstants.AdminUserClaimValue);
+    });
+}
+);
 builder.Services.AddControllers();
 builder.Services.AddMoviesApplication();
 builder.Services.AddMoviesDatabase(connectionString);
