@@ -37,5 +37,15 @@ namespace Movies.Application.Repositories
                 " GROUP BY userrating", new { MovieId = movieId, UserId = userId }, cancellationToken: token);
             return await connection.QuerySingleOrDefaultAsync<(float? Rating, int? UserRating)>(command);
         }
+
+        public async Task<bool> RateMovieAsync(Guid movieId, int rating, Guid userId, CancellationToken token = default)
+        {
+            var connection = await _dbConnectionFactory.CreateConnectionAsync(token);
+            var command = new CommandDefinition("INSERT INTO Ratings (movieid, userid, rating)" +
+                " VALUES (@MovieId, @UserId, @Rating)" +
+                " ON CONFLICT (movieid, userid) DO UPDATE SET rating = @Rating", new { MovieId = movieId, UserId = userId, Rating = rating }, cancellationToken: token);
+            var result = await connection.ExecuteAsync(command);
+            return result > 0;
+        }
     }
 }
