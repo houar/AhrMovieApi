@@ -8,11 +8,13 @@ namespace Movies.Application.Services
     {
         private readonly IMovieRepository _movieRepository;
         private readonly IValidator<Movie> _movieValidator;
+        private readonly IRatingRepository _ratingRepository;
 
-        public MovieService(IMovieRepository movieRepository, IValidator<Movie> movieValidator)
+        public MovieService(IMovieRepository movieRepository, IValidator<Movie> movieValidator, IRatingRepository ratingRepository)
         {
             _movieRepository = movieRepository ?? throw new ArgumentNullException(nameof(movieRepository));
             _movieValidator = movieValidator ?? throw new ArgumentNullException(nameof(movieValidator));
+            _ratingRepository = ratingRepository ?? throw new ArgumentNullException(nameof(ratingRepository));
         }
 
         public async Task<bool> CreateAsync(Movie movie, CancellationToken token = default)
@@ -56,6 +58,17 @@ namespace Movies.Application.Services
             }
 
             await _movieRepository.UpdateAsync(movie, token);
+
+            if (userId.HasValue == false)
+            {
+                movie.Rating = await _ratingRepository.GetRatingAsync(movie.Id, token);
+                return movie;
+            }
+
+            var (rating, userRating) = await _ratingRepository.GetRatingAsync(movie.Id, userId.Value, token);
+            movie.Rating = rating;
+            movie.UserRating = userRating;
+
             return movie;
         }
     }
