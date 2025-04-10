@@ -20,6 +20,16 @@ namespace Movies.Application.Services
             _movieRepository = movieRepository ?? throw new ArgumentNullException(nameof(movieRepository));
         }
 
+        public async Task<bool> DeleteRatingAsync(Guid movieId, Guid userId, CancellationToken token = default)
+        {
+            var movieExists = await _movieRepository.ExistsByIdAsync(movieId, token);
+            if (movieExists == false)
+            {
+                return false;
+            }
+            return await _ratingRepository.DeleteRatingAsync(movieId, userId, token);
+        }
+
         public async Task<bool> RateMovieAsync(Guid movieId, int rating, Guid userId, CancellationToken token = default)
         {
             if (rating < 1 || rating > 5)

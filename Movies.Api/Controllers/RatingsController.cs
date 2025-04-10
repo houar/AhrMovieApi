@@ -29,5 +29,18 @@ namespace Movies.Api.Controllers
             var rating = await _ratingService.RateMovieAsync(id, request.Rating, userId!.Value , token);
             return rating ? Ok() : NotFound();
         }
+
+        [Authorize]
+        [HttpDelete(ApiEndpoints.Movies.DeleteRating)]
+        public async Task<IActionResult> DeleteRating([FromRoute] Guid movieId, CancellationToken token)
+        {
+            var userId = HttpContext.GetUserId();
+            if (userId is null || userId == Guid.Empty)
+            {
+                return Unauthorized();
+            }
+            var result = await _ratingService.DeleteRatingAsync(movieId, userId!.Value, token);
+            return result ? Ok() : NotFound();
+        }
     }
 }

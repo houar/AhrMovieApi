@@ -17,6 +17,15 @@ namespace Movies.Application.Repositories
             _dbConnectionFactory = dbConnectionFactory ?? throw new ArgumentNullException(nameof(dbConnectionFactory));
         }
 
+        public async Task<bool> DeleteRatingAsync(Guid movieId, Guid userId, CancellationToken token = default)
+        {
+            var connection = await _dbConnectionFactory.CreateConnectionAsync(token);
+            var command = new CommandDefinition("DELETE FROM Ratings" +
+                " WHERE movieid = @MovieId AND userid = @UserId", new { MovieId = movieId, UserId = userId }, cancellationToken: token);
+            var result = await connection.ExecuteAsync(command);
+            return result > 0;
+        }
+
         public async Task<float?> GetRatingAsync(Guid movieId, CancellationToken token = default)
         {
             var connection = await _dbConnectionFactory.CreateConnectionAsync(token);
