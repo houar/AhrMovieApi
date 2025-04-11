@@ -16,6 +16,13 @@ namespace Movies.Application.Validators
             RuleFor(x => x.SortField)
                 .Must(x => string.IsNullOrEmpty(x) || AllowedSortFields.Contains(x, StringComparer.OrdinalIgnoreCase))
                 .WithMessage($"Sort field have be only one of the following: {string.Join(", ", AllowedSortFields)}.");
+
+            RuleFor(x => x.Page)
+                .GreaterThanOrEqualTo(1);
+
+            RuleFor(x => x.PageSize)
+                .InclusiveBetween(1, 25)
+                .WithMessage("You can get between 1 and 25 movies per page");
         }
     }
 }

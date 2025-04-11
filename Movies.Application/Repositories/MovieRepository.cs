@@ -124,7 +124,9 @@ namespace Movies.Application.Repositories
                 " LEFT JOIN Ratings usr ON usr.movieid = mo.id AND usr.userid = @UserId" +
                 " WHERE (@Title IS NULL OR mo.title ILIKE '%' || @Title || '%')" +
                 " AND (@YearOfRelease IS NULL OR mo.yearofrelease = @YearOfRelease)" +
-                $" GROUP BY mo.id, userrating {sortClause}", options, cancellationToken: token));
+                $" GROUP BY mo.id, userrating {sortClause}" +
+                " LIMIT @PageSize" +
+                " OFFSET (@Page - 1) * @PageSize", options, cancellationToken: token));
             var movies = results.Select(res => new Movie
             {
                 Id = res.id,
@@ -135,6 +137,15 @@ namespace Movies.Application.Repositories
                 Genres = Enumerable.ToList(res.genres.Split(','))
             });
             return movies;
+        }
+
+        public async Task<int> GetCountAsync(string? title, int? year, CancellationToken token = default)
+        {
+            using var connection = _dbConnectionFactory.CreateConnectionAsync(token).Result;
+            var count = await connection.ExecuteScalarAsync<int>(new CommandDefinition("SELECT count(1) FROM Movies" +
+                " WHERE (@Title IS NULL OR title ILIKE '%' || @Title || '%')" +
+                " AND (@YearOfRelease IS NULL OR yearofrelease = @YearOfRelease)", new { Title = title, YearOfRelease = year }, cancellationToken: token));
+            return count;
         }
 
         public async Task<bool> UpdateAsync(Movie movie, CancellationToken token = default)

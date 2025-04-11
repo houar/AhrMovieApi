@@ -24,7 +24,8 @@ namespace Movies.Api.Controllers
             var userId = HttpContext.GetUserId();
             var options = request.MapToOptions().WithUser(userId);
             var movies = await _movieService.GetMoviesAsync(options, token);
-            return Ok(movies.MapToMoviesResponse());
+            var total = await _movieService.GetCountAsync(request.Title, request.Year, token);
+            return Ok(movies.MapToMoviesResponse(request.Page, request.PageSize, total));
         }
 
         [Authorize]
