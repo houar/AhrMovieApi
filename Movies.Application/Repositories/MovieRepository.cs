@@ -66,7 +66,7 @@ namespace Movies.Application.Repositories
                 " LEFT JOIN Ratings rg ON rg.movieid = mo.id" +
                 " LEFT JOIN Ratings usr ON usr.movieid = mo.id AND usr.userid = @UserId" +
                 " WHERE mo.id = @Id" +
-                " GROUP BY mo.id, userrating", new {Id = id, UserId = userId }, cancellationToken: token));
+                " GROUP BY mo.id, userrating", new { Id = id, UserId = userId }, cancellationToken: token));
             if (movie is null)
             {
                 return null;
@@ -105,6 +105,16 @@ namespace Movies.Application.Repositories
 
         public async Task<IEnumerable<Movie>> GetMoviesAsync(GetAllMoviesOptions options, CancellationToken token = default)
         {
+            var sortClause = string.Empty;
+            if (options.SortOrder != SortOrder.Unsorted)
+            {
+                var sortField = options.SortField!.Equals("year") ? "yearofrelease" : options.SortField;
+
+                sortClause = options.SortOrder == SortOrder.Ascending
+                    ? $", mo.{sortField} ORDER BY {sortField} ASC"
+                    : $", mo.{sortField} ORDER BY {sortField} DESC";
+            }
+
             using var connection = await _dbConnectionFactory.CreateConnectionAsync(token);
             var results = await connection.QueryAsync(new CommandDefinition("SELECT mo.*, string_agg(distinct ge.name, ',') as genres," +
                 " ROUND(AVG(rg.rating), 1) AS rating, usr.rating as userrating" +
@@ -114,7 +124,7 @@ namespace Movies.Application.Repositories
                 " LEFT JOIN Ratings usr ON usr.movieid = mo.id AND usr.userid = @UserId" +
                 " WHERE (@Title IS NULL OR mo.title ILIKE '%' || @Title || '%')" +
                 " AND (@YearOfRelease IS NULL OR mo.yearofrelease = @YearOfRelease)" +
-                " GROUP BY mo.id, userrating", options, cancellationToken: token));
+                $" GROUP BY mo.id, userrating {sortClause}", options, cancellationToken: token));
             var movies = results.Select(res => new Movie
             {
                 Id = res.id,
