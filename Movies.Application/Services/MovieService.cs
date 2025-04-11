@@ -9,12 +9,14 @@ namespace Movies.Application.Services
         private readonly IMovieRepository _movieRepository;
         private readonly IValidator<Movie> _movieValidator;
         private readonly IRatingRepository _ratingRepository;
+        private readonly IValidator<GetAllMoviesOptions> _optionsValidator;
 
-        public MovieService(IMovieRepository movieRepository, IValidator<Movie> movieValidator, IRatingRepository ratingRepository)
+        public MovieService(IMovieRepository movieRepository, IValidator<Movie> movieValidator, IRatingRepository ratingRepository, IValidator<GetAllMoviesOptions> optionsValidator)
         {
             _movieRepository = movieRepository ?? throw new ArgumentNullException(nameof(movieRepository));
             _movieValidator = movieValidator ?? throw new ArgumentNullException(nameof(movieValidator));
             _ratingRepository = ratingRepository ?? throw new ArgumentNullException(nameof(ratingRepository));
+            _optionsValidator = optionsValidator ?? throw new ArgumentNullException(nameof(optionsValidator));
         }
 
         public async Task<bool> CreateAsync(Movie movie, CancellationToken token = default)
@@ -43,9 +45,10 @@ namespace Movies.Application.Services
             return await _movieRepository.GetBySlugAsync(slug, userId, token);
         }
 
-        public async Task<IEnumerable<Movie>> GetMoviesAsync(Guid? userId = default, CancellationToken token = default)
+        public async Task<IEnumerable<Movie>> GetMoviesAsync(GetAllMoviesOptions options, CancellationToken token = default)
         {
-            return await _movieRepository.GetMoviesAsync(userId, token);
+            await _optionsValidator.ValidateAndThrowAsync(options, token);
+            return await _movieRepository.GetMoviesAsync(options, token);
         }
 
         public async Task<Movie?> UpdateAsync(Movie movie, Guid? userId = default, CancellationToken token = default)

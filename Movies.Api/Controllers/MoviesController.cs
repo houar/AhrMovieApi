@@ -19,10 +19,11 @@ namespace Movies.Api.Controllers
 
         [Authorize]
         [HttpGet(ApiEndpoints.Movies.GetAll)]
-        public async Task<IActionResult> GetMovies(CancellationToken token)
+        public async Task<IActionResult> GetMovies([FromQuery] GetAllMoviesRequest request, CancellationToken token)
         {
             var userId = HttpContext.GetUserId();
-            var movies = await _movieService.GetMoviesAsync(userId, token);
+            var options = request.MapToOptions().WithUser(userId);
+            var movies = await _movieService.GetMoviesAsync(options, token);
             return Ok(movies.MapToMoviesResponse());
         }
 

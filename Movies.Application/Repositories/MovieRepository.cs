@@ -103,7 +103,7 @@ namespace Movies.Application.Repositories
             return movie;
         }
 
-        public async Task<IEnumerable<Movie>> GetMoviesAsync(Guid? userId = default, CancellationToken token = default)
+        public async Task<IEnumerable<Movie>> GetMoviesAsync(GetAllMoviesOptions options, CancellationToken token = default)
         {
             using var connection = await _dbConnectionFactory.CreateConnectionAsync(token);
             var results = await connection.QueryAsync(new CommandDefinition("SELECT mo.*, string_agg(distinct ge.name, ',') as genres," +
@@ -112,7 +112,9 @@ namespace Movies.Application.Repositories
                 " LEFT JOIN Genres ge ON mo.id = ge.movieid" +
                 " LEFT JOIN Ratings rg ON rg.movieid = mo.id" +
                 " LEFT JOIN Ratings usr ON usr.movieid = mo.id AND usr.userid = @UserId" +
-                " GROUP BY mo.id, userrating", new { UserId = userId }, cancellationToken: token));
+                " WHERE (@Title IS NULL OR mo.title ILIKE '%' || @Title || '%')" +
+                " AND (@YearOfRelease IS NULL OR mo.yearofrelease = @YearOfRelease)" +
+                " GROUP BY mo.id, userrating", options, cancellationToken: token));
             var movies = results.Select(res => new Movie
             {
                 Id = res.id,
