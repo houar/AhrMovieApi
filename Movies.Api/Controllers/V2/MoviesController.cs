@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Movies.Api.Auth;
 using Movies.Api.Mapping;
@@ -7,6 +8,7 @@ using Movies.Contracts.Requests.V2;
 
 namespace Movies.Api.Controllers.V2
 {
+    [Authorize]
     [ApiVersion("2.0")]
     [ApiController]
     public partial class MoviesController : ControllerBase
