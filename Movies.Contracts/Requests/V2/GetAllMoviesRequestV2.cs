@@ -1,6 +1,6 @@
-﻿namespace Movies.Contracts.Requests
+﻿namespace Movies.Contracts.Requests.V2
 {
-    public class GetAllMoviesRequest : PagedRequest
+    public class GetAllMoviesRequestV2 : PagedRequestV2
     {
         public required string? Title { get; init; }
         public required int? Year { get; init; }

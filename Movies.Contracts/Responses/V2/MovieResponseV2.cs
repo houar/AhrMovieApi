@@ -1,6 +1,6 @@
-﻿namespace Movies.Contracts.Responses
+﻿namespace Movies.Contracts.Responses.V2
 {
-    public class MovieResponse : HalResponse
+    public class MovieResponseV2 : HalResponse
     {
         public required Guid Id { get; init; }
         public required string Title { get; init; }

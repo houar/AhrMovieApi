@@ -1,16 +1,17 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 using Movies.Api.Auth;
 using Movies.Api.Mapping;
 using Movies.Application.Services;
-using Movies.Contracts.Requests;
+using Movies.Contracts.Requests.V1;
 using Movies.Contracts.Responses;
 
-namespace Movies.Api.Controllers
+namespace Movies.Api.Controllers.V1
 {
+    [ApiVersion("1.0", Deprecated = true)]
     [ApiController]
-    public class MoviesController : ControllerBase
+    public partial class MoviesController : ControllerBase
     {
         private readonly IMovieService _movieService;
 

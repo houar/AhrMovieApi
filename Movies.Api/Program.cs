@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Movies.Api.Auth;
 using Movies.Api.Mapping;
@@ -46,6 +47,14 @@ builder.Services.AddAuthorization(options =>
         ctx.User.HasClaim(claim => claim is { Type: AuthConstants.TrustedMemberClaimName, Value: AuthConstants.TrustedMemberClaimValue}));
     });
 });
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1.0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+    //options.ApiVersionReader = new MediaTypeApiVersionReader("api-version");
+    options.ApiVersionReader = new QueryStringApiVersionReader("api-version");
+}).AddMvc();
 builder.Services.AddControllers();
 builder.Services.AddMoviesApplication();
 builder.Services.AddMoviesDatabase(connectionString);
