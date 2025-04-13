@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Movies.Api.Auth;
 using Movies.Api.Mapping;
 using Movies.Application.Services;
 using Movies.Contracts.Requests;
+using Movies.Contracts.Responses;
 
 namespace Movies.Api.Controllers
 {
@@ -30,7 +32,10 @@ namespace Movies.Api.Controllers
 
         [Authorize]
         [HttpGet(ApiEndpoints.Movies.Get)]
-        public async Task<IActionResult> GetMovie([FromRoute] string idOrSlug, CancellationToken token)
+        public async Task<IActionResult> GetMovie([FromRoute] string idOrSlug
+            , [FromServices] LinkGenerator linkGenerator
+            , [FromQuery] bool includeLinks
+            , CancellationToken token)
         {
             var userId = HttpContext.GetUserId();
             var movie = Guid.TryParse(idOrSlug, out var id)
@@ -40,7 +45,29 @@ namespace Movies.Api.Controllers
             {
                 return NotFound();
             }
-            return Ok(movie.MapToMovieResponse());
+            var response = movie.MapToMovieResponse();
+            if (includeLinks)
+            {
+                response.AddLink(new HalLink()
+                {
+                    Href = linkGenerator.GetUriByAction(httpContext: HttpContext, action: nameof(GetMovie), values: new { idOrSlug = movie.Slug })!,
+                    Rel = "self",
+                    Type = "GET"
+                });
+                response.AddLink(new HalLink()
+                {
+                    Href = linkGenerator.GetUriByAction(httpContext: HttpContext, action: nameof(UpdateMovie), values: new { id = movie.Id })!,
+                    Rel = "self",
+                    Type = "PUT"
+                });
+                response.AddLink(new HalLink()
+                {
+                    Href = linkGenerator.GetUriByAction(httpContext: HttpContext, action: nameof(DeleteMovie), values: new { id = movie.Id })!,
+                    Rel = "self",
+                    Type = "DELETE"
+                });
+            }
+            return Ok(response);
         }
 
         [Authorize(AuthConstants.AdminOrTrustedPolicyName)]
