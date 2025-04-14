@@ -5,6 +5,7 @@ using Movies.Api.Auth;
 using Movies.Api.Mapping;
 using Movies.Application.Services;
 using Movies.Contracts.Requests.V1;
+using Movies.Contracts.Responses.V1;
 
 namespace Movies.Api.Controllers.V1
 {
@@ -22,6 +23,8 @@ namespace Movies.Api.Controllers.V1
         [Authorize]
         [HttpPost(ApiEndpoints.Movies.Rate)]
         [HttpPut(ApiEndpoints.Movies.Rate)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> RateMovie([FromRoute] Guid id, [FromBody] RatingRequest request, CancellationToken token)
         {
             var userId = HttpContext.GetUserId();
@@ -35,6 +38,8 @@ namespace Movies.Api.Controllers.V1
 
         [Authorize]
         [HttpDelete(ApiEndpoints.Movies.DeleteRating)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteRating([FromRoute] Guid movieId, CancellationToken token)
         {
             var userId = HttpContext.GetUserId();
@@ -48,6 +53,7 @@ namespace Movies.Api.Controllers.V1
 
         [Authorize]
         [HttpGet(ApiEndpoints.Ratings.GetUserRatings)]
+        [ProducesResponseType(typeof(RatingsResponse), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetUserRatings(CancellationToken token)
         {
             var userId = HttpContext.GetUserId();

@@ -5,6 +5,7 @@ using Movies.Api.Auth;
 using Movies.Api.Mapping;
 using Movies.Application.Services;
 using Movies.Contracts.Requests.V2;
+using Movies.Contracts.Responses.V2;
 
 namespace Movies.Api.Controllers.V2
 {
@@ -21,6 +22,7 @@ namespace Movies.Api.Controllers.V2
         }
 
         [HttpGet(ApiEndpoints.Movies.GetAll)]
+        [ProducesResponseType(typeof(MoviesResponseV2), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetMovies([FromQuery] GetAllMoviesRequestV2 request, CancellationToken token)
         {
             var userId = HttpContext.GetUserId();
