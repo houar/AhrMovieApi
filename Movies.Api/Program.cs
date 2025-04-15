@@ -63,6 +63,7 @@ builder.Services
     .AddMvc()
     .AddApiExplorer();
 builder.Services.AddHealthChecks().AddCheck<DBHealthCheck>(DBHealthCheck.HealthCheckName);
+builder.Services.AddResponseCaching();
 builder.Services.AddControllers();
 builder.Services.AddMoviesApplication();
 builder.Services.AddMoviesDatabase(connectionString);
@@ -87,12 +88,10 @@ if (app.Environment.IsDevelopment())
 // Configure the HTTP request pipeline.
 
 app.MapHealthChecks("_health");
-
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseResponseCaching();
 app.UseMiddleware<ValidationMappingMiddleware>();
 app.MapControllers();
 
