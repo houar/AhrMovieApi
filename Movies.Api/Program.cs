@@ -2,6 +2,7 @@ using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Movies.Api.Auth;
+using Movies.Api.Health;
 using Movies.Api.Mapping;
 using Movies.Api.Swagger;
 using Movies.Application;
@@ -61,6 +62,7 @@ builder.Services
     })
     .AddMvc()
     .AddApiExplorer();
+builder.Services.AddHealthChecks().AddCheck<DBHealthCheck>(DBHealthCheck.HealthCheckName);
 builder.Services.AddControllers();
 builder.Services.AddMoviesApplication();
 builder.Services.AddMoviesDatabase(connectionString);
@@ -83,6 +85,8 @@ if (app.Environment.IsDevelopment())
 }
 
 // Configure the HTTP request pipeline.
+
+app.MapHealthChecks("_health");
 
 app.UseHttpsRedirection();
 
