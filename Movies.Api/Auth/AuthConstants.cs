@@ -11,5 +11,7 @@
         internal const string TrustedMemberClaimValue = "true";
 
         internal const string UserIdClaimName = "userid";
+
+        internal const string ApiKeyHeaderName = "x-api-key";
     }
 }

@@ -1,5 +1,6 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Options;
 using Movies.Api.Auth;
 using Movies.Api.Health;
@@ -77,6 +78,7 @@ builder.Services.AddOutputCache(op =>
     });
     op.AddPolicy("MovieGetWithUserRatV3", new ClaimAwareCachePolicy("userid"));
 });
+builder.Services.AddScoped<IAsyncAuthorizationFilter, ApiKeyAuthFilter> ();
 builder.Services.AddControllers();
 builder.Services.AddMoviesApplication();
 builder.Services.AddMoviesDatabase(connectionString);

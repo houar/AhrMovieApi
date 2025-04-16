@@ -1,6 +1,6 @@
 ﻿using Asp.Versioning;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.OutputCaching;
 using Movies.Api.Auth;
 using Movies.Api.Mapping;
@@ -11,7 +11,6 @@ using Movies.Contracts.Responses.V2;
 
 namespace Movies.Api.Controllers.V3
 {
-    [Authorize]
     [ApiVersion("3.0")]
     [ApiController]
     public partial class MoviesController : ControllerBase
@@ -23,7 +22,7 @@ namespace Movies.Api.Controllers.V3
             _movieService = movieService ?? throw new ArgumentNullException(nameof(movieService));
         }
 
-        [AllowAnonymous]
+        [ServiceFilter(typeof(IAsyncAuthorizationFilter))]
         [HttpGet(ApiEndpoints.Movies.GetAll)]
         [OutputCache(PolicyName = "MovieGetAllV3")]
         [ProducesResponseType(typeof(MoviesResponseV2), StatusCodes.Status200OK)]
@@ -36,7 +35,7 @@ namespace Movies.Api.Controllers.V3
             return Ok(movies.MapToMoviesResponseV2(request.Page, request.PageSize, total));
         }
 
-        [AllowAnonymous]
+        [ServiceFilter(typeof(IAsyncAuthorizationFilter))]
         [ResponseCache(Duration = 60, VaryByHeader = "Accept, Accept-Encoding", Location = ResponseCacheLocation.Any)]
         [OutputCache(PolicyName = "MovieGetWithUserRatV3", Duration = 60)]
         [HttpGet(ApiEndpoints.Movies.Get)]
