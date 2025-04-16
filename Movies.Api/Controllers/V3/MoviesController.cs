@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.OutputCaching;
@@ -16,10 +17,12 @@ namespace Movies.Api.Controllers.V3
     public partial class MoviesController : ControllerBase
     {
         private readonly IMovieService _movieService;
+        private readonly IOutputCacheStore _outputCacheStore;
 
-        public MoviesController(IMovieService movieService)
+        public MoviesController(IMovieService movieService, IOutputCacheStore outputCacheStore)
         {
             _movieService = movieService ?? throw new ArgumentNullException(nameof(movieService));
+            _outputCacheStore = outputCacheStore ?? throw new ArgumentNullException(nameof(outputCacheStore));
         }
 
         [ServiceFilter(typeof(IAsyncAuthorizationFilter))]
@@ -53,6 +56,21 @@ namespace Movies.Api.Controllers.V3
             }
             var response = movie.MapToMovieResponse();
             return Ok(response);
+        }
+
+        [Authorize(AuthConstants.MultiAuthPolicyName)]
+        [HttpDelete(ApiEndpoints.Movies.Delete)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteMovieV3([FromRoute] Guid id, CancellationToken token)
+        {
+            var deleted = await _movieService.DeleteByIdAsync(id, token);
+            if (deleted == false)
+            {
+                return NotFound();
+            }
+            await _outputCacheStore.EvictByTagAsync("movie-get-all", token);
+            return NoContent();
         }
     }
 }

@@ -13,5 +13,7 @@
         internal const string UserIdClaimName = "userid";
 
         internal const string ApiKeyHeaderName = "x-api-key";
+
+        internal const string MultiAuthPolicyName = "MultiAuthPolicy";
     }
 }

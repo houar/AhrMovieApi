@@ -12,5 +12,15 @@
             }
             return null;
         }
+
+        internal static Guid? GetUserIdFromApiKey(this string apiKey)
+        {
+            //For the sake of the demo, we are assuming that the API key is a User GUID.
+            if (Guid.TryParse(apiKey, out var guid))
+            {
+                return guid;
+            }
+            return null;
+        }
     }
 }

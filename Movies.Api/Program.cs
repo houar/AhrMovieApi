@@ -52,6 +52,10 @@ builder.Services.AddAuthorization(options =>
         ctx.User.HasClaim(claim => claim is { Type: AuthConstants.AdminUserClaimName, Value: AuthConstants.AdminUserClaimValue }) ||
         ctx.User.HasClaim(claim => claim is { Type: AuthConstants.TrustedMemberClaimName, Value: AuthConstants.TrustedMemberClaimValue }));
     });
+    options.AddPolicy(AuthConstants.MultiAuthPolicyName, policy =>
+    {
+        policy.Requirements.Add(new MultiAuthRequirement(config["ApiKey"]));
+    });
 });
 builder.Services
     .AddApiVersioning(options =>
