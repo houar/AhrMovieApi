@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Movies.Api.Auth;
 using Movies.Api.Health;
 using Movies.Api.Mapping;
+using Movies.Api.OutputCache;
 using Movies.Api.Swagger;
 using Movies.Application;
 using Movies.Application.Database;
@@ -64,6 +65,18 @@ builder.Services
     .AddApiExplorer();
 builder.Services.AddHealthChecks().AddCheck<DBHealthCheck>(DBHealthCheck.HealthCheckName);
 builder.Services.AddResponseCaching();
+builder.Services.AddOutputCache(op =>
+{
+    op.AddBasePolicy(x => x.Cache());
+    op.AddPolicy("MovieGetAllV3", c =>
+    {
+        c.Cache()
+        .Expire(TimeSpan.FromMinutes(1))
+        .SetVaryByQuery(new[] { "title", "year", "sortBy", "page", "pageSize" })
+        .Tag("movie-get-all");
+    });
+    op.AddPolicy("MovieGetWithUserRatV3", new ClaimAwareCachePolicy("userid"));
+});
 builder.Services.AddControllers();
 builder.Services.AddMoviesApplication();
 builder.Services.AddMoviesDatabase(connectionString);
@@ -92,6 +105,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseResponseCaching();
+app.UseOutputCache();
 app.UseMiddleware<ValidationMappingMiddleware>();
 app.MapControllers();
 

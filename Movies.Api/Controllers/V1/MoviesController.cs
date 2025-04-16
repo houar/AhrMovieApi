@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using Movies.Api.Auth;
 using Movies.Api.Mapping;
 using Movies.Application.Services;
@@ -15,10 +16,12 @@ namespace Movies.Api.Controllers.V1
     public partial class MoviesController : ControllerBase
     {
         private readonly IMovieService _movieService;
+        private readonly IOutputCacheStore _outputCacheStore;
 
-        public MoviesController(IMovieService movieService)
+        public MoviesController(IMovieService movieService, IOutputCacheStore outputCacheStore)
         {
             _movieService = movieService ?? throw new ArgumentNullException(nameof(movieService));
+            _outputCacheStore = outputCacheStore ?? throw new ArgumentNullException(nameof(outputCacheStore));
         }
 
         [Authorize]
@@ -88,6 +91,7 @@ namespace Movies.Api.Controllers.V1
             {
                 return StatusCode(500, "An error occurred while creating the movie.");
             }
+            await _outputCacheStore.EvictByTagAsync("movie-get-all", token);
             return CreatedAtAction(nameof(GetMovie), new { idOrSlug = movie.Id }, movie.MapToMovieResponse());
         }
 
@@ -105,6 +109,7 @@ namespace Movies.Api.Controllers.V1
             {
                 return NotFound();
             }
+            await _outputCacheStore.EvictByTagAsync("movie-get-all", token);
             return Ok(updated.MapToMovieResponse());
         }
 
@@ -119,6 +124,7 @@ namespace Movies.Api.Controllers.V1
             {
                 return NotFound();
             }
+            await _outputCacheStore.EvictByTagAsync("movie-get-all", token);
             return NoContent();
         }
     }
