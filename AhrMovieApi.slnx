@@ -12,6 +12,10 @@
   <Folder Name="/02.Idp/" Id="02ea681e-c7d8-13c7-8484-4ac65e1b71e8">
     <Project Path="Identity.Api/Identity.Api.csproj" Id="7e25c805-55c8-4665-9a5b-faff094fe827" />
   </Folder>
+  <Folder Name="/03.SDK/" Id="73b2fde2-1827-422f-8ec8-b8c55fb1a792">
+    <Project Path="Movies.Api.Sdk.Consumer/Movies.Api.Sdk.Consumer.csproj" Id="c7bc8e42-37b4-4a96-84ae-0626987d77a4" />
+    <Project Path="Movies.Api.Sdk/Movies.Api.Sdk.csproj" Id="f1f2c74c-b728-4ca7-83da-f47553958ee1" />
+  </Folder>
   <Folder Name="/Helpers/">
     <File Path="Helpers/Course.postman_collection.json" />
     <File Path="Helpers/movies.json" />
