@@ -137,7 +137,32 @@ var serviceProvider = services.BuildServiceProvider();
 var movieApiWithHttpClientFactory = serviceProvider.GetRequiredService<IMoviesApi>();
 var movieWithHttpClientFactory = await movieApiWithHttpClientFactory.GetMovieApiVersionHeaderAsync("nick-the-greek-2023");
 string jsonWithHttpClientFactory = JsonSerializer.Serialize(movieWithHttpClientFactory, new JsonSerializerOptions { WriteIndented = true });
-var printWithHttpClientFactory = new[] { "\n08 - 05/09 > Using the HttpClientFactory:", "-----------------------------------------", jsonWithHttpClientFactory };
+var printWithHttpClientFactory = new[] {
+    "\n08 - 05/09 > Using the HttpClientFactory:",
+    "-----------------------------------------",
+    jsonWithHttpClientFactory };
 Console.WriteLine(string.Join(Environment.NewLine, printWithHttpClientFactory));
+
+/*
+* 08 - 06/09 : Adding authentication
+*/
+
+services.AddRefitClient<IMoviesApiV1Auth>(x => new RefitSettings
+{
+    AuthorizationHeaderValueGetter = (message, token) =>
+    {
+        return Task.FromResult("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiYWZkZWNhOC0yMGNiLTQwM2ItYTVkMi0yOWE2NDc2MzU5ZDUiLCJzdWIiOiJtYWRqaWRAaG91YXIuZXUiLCJlbWFpbCI6Im1hZGppZEBob3Vhci5ldSIsInVzZXJpZCI6ImQ4NTY2ZGUzLWIxYTYtNGE5Yi1iODQyLThlMzg4N2E4MmU0MSIsImFkbWluIjp0cnVlLCJ0cnVzdGVkX21lbWJlciI6dHJ1ZSwibmJmIjoxNzQ1NDk5MDU5LCJleHAiOjE3NDU1MDA4NTksImlhdCI6MTc0NTQ5OTA1OSwiaXNzIjoiaHR0cHM6Ly9pZHAuaG91YXIuZXUiLCJhdWQiOiJodHRwczovL21vdmllcy5ob3Vhci5ldSJ9.R5X2vpldXjXqyJmMsbOo2x4JbZvaKdtNbkrpsA9iFlA");
+    }
+})
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri(apiUrl));
+var serviceProvider2 = services.BuildServiceProvider();
+var movieApiV1NeedsAuth = serviceProvider2.GetRequiredService<IMoviesApiV1Auth>();
+var movieV1NeedsAuth = await movieApiV1NeedsAuth.GetMovieV1NeedsAuthorizationAsync("nick-the-greek-2023");
+string jsonV1NeedsAuth = JsonSerializer.Serialize(movieV1NeedsAuth, new JsonSerializerOptions { WriteIndented = true });
+var printV1NeedsAuth = new[] {
+    "\n08 - 06/09 > Adding authentication:",
+    "-----------------------------------",
+    jsonV1NeedsAuth };
+Console.WriteLine(string.Join(Environment.NewLine, printV1NeedsAuth));
 
 Console.ReadKey();
