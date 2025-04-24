@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Movies.Api.Sdk;
 using Movies.Api.Sdk.Consumer.MovieApi;
 using Movies.Contracts.Requests.V1;
@@ -124,5 +125,19 @@ string jsonUpdate = JsonSerializer.Serialize(updateMovieResponse.Content, new Js
 
 var update = new[] { "\nUpdate movie: Version infos -> ContentType header", "-------------", jsonUpdate };
 Console.WriteLine(string.Join(Environment.NewLine, update));
+
+/*
+* 08 - 05/09 : Using the HttpClientFactory
+*/
+
+var services = new ServiceCollection();
+services.AddRefitClient<IMoviesApi>()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri(apiUrl));
+var serviceProvider = services.BuildServiceProvider();
+var movieApiWithHttpClientFactory = serviceProvider.GetRequiredService<IMoviesApi>();
+var movieWithHttpClientFactory = await movieApiWithHttpClientFactory.GetMovieApiVersionHeaderAsync("nick-the-greek-2023");
+string jsonWithHttpClientFactory = JsonSerializer.Serialize(movieWithHttpClientFactory, new JsonSerializerOptions { WriteIndented = true });
+var printWithHttpClientFactory = new[] { "\n08 - 05/09 > Using the HttpClientFactory:", "-----------------------------------------", jsonWithHttpClientFactory };
+Console.WriteLine(string.Join(Environment.NewLine, printWithHttpClientFactory));
 
 Console.ReadKey();
