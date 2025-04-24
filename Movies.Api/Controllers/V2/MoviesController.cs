@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Movies.Api.Auth;
 using Movies.Api.Mapping;
 using Movies.Application.Services;
+using Movies.Contracts.Requests.V1;
 using Movies.Contracts.Requests.V2;
+using Movies.Contracts.Responses;
 using Movies.Contracts.Responses.V1;
 using Movies.Contracts.Responses.V2;
 
@@ -52,6 +54,25 @@ namespace Movies.Api.Controllers.V2
             }
             var response = movie.MapToMovieResponse();
             return Ok(response);
+        }
+
+        [AllowAnonymous]//For testing purposes (Cache - from the browser)
+        //[Authorize(AuthConstants.MultiAuthPolicyName)]
+        [HttpPut(ApiEndpoints.Movies.Update)]
+        [ProducesResponseType(typeof(MovieResponse), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ValidationFailureResponse), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateMovie([FromRoute] Guid id, [FromBody] MovieReqUpdate movieReq, CancellationToken token)
+        {
+            var userId = HttpContext.GetUserId();
+            var movie = movieReq.MapToMovie(id);
+            var updated = await _movieService.UpdateAsync(movie, userId, token);
+            if (updated == null)
+            {
+                return NotFound();
+            }
+            //await _outputCacheStore.EvictByTagAsync("movie-get-all", token);
+            return Ok(updated.MapToMovieResponse());
         }
     }
 }
