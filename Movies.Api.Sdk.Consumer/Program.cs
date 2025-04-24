@@ -145,15 +145,21 @@ Console.WriteLine(string.Join(Environment.NewLine, printWithHttpClientFactory));
 
 /*
 * 08 - 06/09 : Adding authentication
+* 08 - 07/09 : Handling token generation and refreshing
 */
 
-services.AddRefitClient<IMoviesApiV1Auth>(x => new RefitSettings
-{
-    AuthorizationHeaderValueGetter = (message, token) =>
+services
+    .AddHttpClient()
+    .Configure<MovieApiOptions>(config.GetSection("MoviesApiOptions"))
+    .AddSingleton<AuthTokenProvider>()
+    .AddRefitClient<IMoviesApiV1Auth>(provider => new RefitSettings
     {
-        return Task.FromResult("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiYWZkZWNhOC0yMGNiLTQwM2ItYTVkMi0yOWE2NDc2MzU5ZDUiLCJzdWIiOiJtYWRqaWRAaG91YXIuZXUiLCJlbWFpbCI6Im1hZGppZEBob3Vhci5ldSIsInVzZXJpZCI6ImQ4NTY2ZGUzLWIxYTYtNGE5Yi1iODQyLThlMzg4N2E4MmU0MSIsImFkbWluIjp0cnVlLCJ0cnVzdGVkX21lbWJlciI6dHJ1ZSwibmJmIjoxNzQ1NDk5MDU5LCJleHAiOjE3NDU1MDA4NTksImlhdCI6MTc0NTQ5OTA1OSwiaXNzIjoiaHR0cHM6Ly9pZHAuaG91YXIuZXUiLCJhdWQiOiJodHRwczovL21vdmllcy5ob3Vhci5ldSJ9.R5X2vpldXjXqyJmMsbOo2x4JbZvaKdtNbkrpsA9iFlA");
-    }
-})
+        AuthorizationHeaderValueGetter = async (message, token) =>
+        {
+            var tokenProvider = provider.GetRequiredService<AuthTokenProvider>();
+            return await tokenProvider.GetAuthToken();
+        }
+    })
     .ConfigureHttpClient(c => c.BaseAddress = new Uri(apiUrl));
 var serviceProvider2 = services.BuildServiceProvider();
 var movieApiV1NeedsAuth = serviceProvider2.GetRequiredService<IMoviesApiV1Auth>();
@@ -162,6 +168,8 @@ string jsonV1NeedsAuth = JsonSerializer.Serialize(movieV1NeedsAuth, new JsonSeri
 var printV1NeedsAuth = new[] {
     "\n08 - 06/09 > Adding authentication:",
     "-----------------------------------",
+    "\n08 - 07/09 > Handling token generation and refreshing:",
+    "------------------------------------------------------",
     jsonV1NeedsAuth };
 Console.WriteLine(string.Join(Environment.NewLine, printV1NeedsAuth));
 
