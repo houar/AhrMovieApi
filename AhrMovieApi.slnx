@@ -5,6 +5,7 @@
     <Platform Name="x86" />
   </Configurations>
   <Folder Name="/01.Movies/">
+    <Project Path="Movies.Api.Minimal/Movies.Api.Minimal.csproj" Id="1a2b6655-3380-47a1-8e15-641e91abf2e0" />
     <Project Path="Movies.Api/Movies.Api.csproj" />
     <Project Path="Movies.Application/Movies.Application.csproj" />
     <Project Path="Movies.Contracts/Movies.Contracts.csproj" />
