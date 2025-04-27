@@ -4,7 +4,7 @@
     {
         internal static void MapMovieEndpoints(this IEndpointRouteBuilder app)
         {
-            //app.MapCreateMovie();
+            app.MapCreateMovie();
             app.MapGetMovie();
             //app.MapGetAllMovies();
             //app.MapUpdateMovie();
