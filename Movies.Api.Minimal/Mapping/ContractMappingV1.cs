@@ -1,4 +1,5 @@
 ﻿using Movies.Application.Models;
+using Movies.Contracts.Requests.MinApi;
 using Movies.Contracts.Requests.V1;
 using Movies.Contracts.Responses.V1;
 
@@ -82,6 +83,19 @@ namespace Movies.Api.Minimal.Mapping
                 SortOrder = request.SortBy is null ? SortOrder.Unsorted : request.SortBy?.StartsWith('-') == true ? SortOrder.Descending : SortOrder.Ascending,
                 Page = request.Page,
                 PageSize = request.PageSize
+            };
+        }
+
+        public static GetAllMoviesOptions MapToOptions(this MinApiGetAllMoviesRequest request)
+        {
+            return new GetAllMoviesOptions
+            {
+                Title = request.Title,
+                YearOfRelease = request.Year,
+                SortField = request.SortBy?.Trim('+', '-'),
+                SortOrder = request.SortBy is null ? SortOrder.Unsorted : request.SortBy?.StartsWith('-') == true ? SortOrder.Descending : SortOrder.Ascending,
+                Page = request.Page.GetValueOrDefault(MinApiPagedRequest.DefaultPage),
+                PageSize = request.PageSize.GetValueOrDefault(MinApiPagedRequest.DefaultPageSize)
             };
         }
 
