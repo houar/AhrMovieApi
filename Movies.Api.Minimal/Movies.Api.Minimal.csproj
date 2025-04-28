@@ -11,4 +11,8 @@
     <ProjectReference Include="..\Movies.Contracts\Movies.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.15" />
+  </ItemGroup>
+
 </Project>
