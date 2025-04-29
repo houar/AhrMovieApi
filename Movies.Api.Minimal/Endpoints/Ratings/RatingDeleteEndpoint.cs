@@ -23,6 +23,8 @@ namespace Movies.Api.Minimal.Endpoints.Ratings
                 return result ? Results.NoContent() : Results.NotFound(new { Message = "Rating not found." });
             })
                 .WithName(Name)
+                .Produces(StatusCodes.Status204NoContent)
+                .Produces(StatusCodes.Status404NotFound)
                 .RequireAuthorization();
         }
     }

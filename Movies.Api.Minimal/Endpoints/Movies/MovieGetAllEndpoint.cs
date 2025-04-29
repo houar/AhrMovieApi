@@ -24,6 +24,7 @@ namespace Movies.Api.Minimal.Endpoints.Movies
                     , request.PageSize.GetValueOrDefault(MinApiPagedRequest.DefaultPageSize), total));
             })
                 .WithName(Name)
+                .Produces(StatusCodes.Status200OK)
                 .RequireAuthorization(AuthConstants.MultiAuthPolicyName);
         }
     }

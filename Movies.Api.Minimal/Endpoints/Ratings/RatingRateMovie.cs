@@ -25,6 +25,8 @@ namespace Movies.Api.Minimal.Endpoints.Ratings
                 return rating ? Results.Ok() : Results.NotFound();
             })
                 .WithName(Name)
+                .Produces(StatusCodes.Status200OK)
+                .Produces(StatusCodes.Status404NotFound)
                 .RequireAuthorization();
         }
     }

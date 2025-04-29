@@ -2,6 +2,7 @@
 using Movies.Api.Minimal.Auth;
 using Movies.Api.Minimal.Mapping;
 using Movies.Application.Services;
+using Movies.Contracts.Responses.V1;
 
 namespace Movies.Api.Minimal.Endpoints.Ratings
 {
@@ -29,6 +30,8 @@ namespace Movies.Api.Minimal.Endpoints.Ratings
                 return TypedResults.Ok(ratings.MapToRatingsResponse());
             })
                 .WithName(Name)
+                .Produces(StatusCodes.Status200OK, typeof(RatingsResponse))
+                .Produces(StatusCodes.Status401Unauthorized)
                 // Only for demo purposes
                 .AddEndpointFilter<ApiKeyAuthFilter>();
         }

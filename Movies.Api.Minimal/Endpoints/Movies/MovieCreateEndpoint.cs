@@ -3,6 +3,8 @@ using Movies.Api.Minimal.Auth;
 using Movies.Api.Minimal.Mapping;
 using Movies.Application.Services;
 using Movies.Contracts.Requests.V1;
+using Movies.Contracts.Responses;
+using Movies.Contracts.Responses.V1;
 
 namespace Movies.Api.Minimal.Endpoints.Movies
 {
@@ -30,6 +32,9 @@ namespace Movies.Api.Minimal.Endpoints.Movies
                 return TypedResults.CreatedAtRoute(movie.MapToMovieResponse(), MovieGetEndpoint.Name, new { idOrSlug = movie.Id });
             })
                 .WithName(Name)
+                .Produces(StatusCodes.Status201Created, typeof(MovieResponse))
+                .Produces(StatusCodes.Status500InternalServerError)
+                .Produces(StatusCodes.Status400BadRequest, typeof(ValidationFailureResponse))
                 .RequireAuthorization(AuthConstants.AdminOrTrustedPolicyName);
         }
     }
