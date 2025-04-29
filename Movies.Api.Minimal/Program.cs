@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Movies.Api.Auth;
 using Movies.Api.Minimal.Endpoints;
 using Movies.Api.Minimal.Mapping;
 using Movies.Api.Minimal.OutputCache;
@@ -45,6 +46,7 @@ builder.Services.AddOutputCache(op =>
     });
     op.AddPolicy("MovieGetWithUserRat", new ClaimAwareCachePolicy("userid"));
 });
+builder.Services.AddScoped<IEndpointFilter, ApiKeyAuthFilter>();
 
 var app = builder.Build();
 

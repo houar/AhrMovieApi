@@ -1,4 +1,5 @@
-﻿using Movies.Api.Minimal.Auth;
+﻿using Movies.Api.Auth;
+using Movies.Api.Minimal.Auth;
 using Movies.Api.Minimal.Mapping;
 using Movies.Application.Services;
 
@@ -17,12 +18,19 @@ namespace Movies.Api.Minimal.Endpoints.Ratings
                 var userId = context.GetUserId();
                 if (userId is null || userId == Guid.Empty)
                 {
-                    return Results.Unauthorized();
+                    //return Results.Unauthorized();
+                    // Only for demo purposes
+                    return Results.Problem(
+                        title: "Unauthorized",
+                        detail: "Unauthorized - The user ID is required (JWT with Authorization header).",
+                        statusCode: StatusCodes.Status401Unauthorized);
                 }
                 var ratings = await ratingService.GetRatingsForUserAsync(userId!.Value, token);
                 return TypedResults.Ok(ratings.MapToRatingsResponse());
             })
-            .WithName(Name);
+                .WithName(Name)
+                // Only for demo purposes
+                .AddEndpointFilter<ApiKeyAuthFilter>();
         }
     }
 }
