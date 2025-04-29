@@ -1,10 +1,14 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using Movies.Api.Auth;
 using Movies.Api.Minimal.Auth;
 using Movies.Api.Minimal.Endpoints;
 using Movies.Api.Minimal.Mapping;
 using Movies.Api.Minimal.OutputCache;
+using Movies.Api.Minimal.Swagger;
 using Movies.Application;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -50,6 +54,18 @@ builder.Services.AddAuthorization(options =>
         policy.Requirements.Add(new MultiAuthRequirement(config["ApiKey"]));
     });
 });
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1.0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+    options.ApiVersionReader = ApiVersionReader.Combine(
+        new QueryStringApiVersionReader("api-version"),
+        new HeaderApiVersionReader("x-api-version"),
+        new MediaTypeApiVersionReader("x-api-version"));
+})
+.AddApiExplorer();
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddMoviesApplication();
 builder.Services.AddMoviesDatabase(connectionString);
 builder.Services.AddResponseCaching();
@@ -66,7 +82,8 @@ builder.Services.AddOutputCache(op =>
     op.AddPolicy("MovieGetWithUserRat", new ClaimAwareCachePolicy("userid"));
 });
 builder.Services.AddScoped<IEndpointFilter, ApiKeyAuthFilter>();
-builder.Services.AddSwaggerGen();
+builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+builder.Services.AddSwaggerGen(options => options.OperationFilter<SwaggerDefaultValues>());
 
 var app = builder.Build();
 
@@ -75,7 +92,13 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(x =>
+    {
+        foreach (var description in app.DescribeApiVersions())
+        {
+            x.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+        }
+    });
 }
 app.UseHttpsRedirection();
 app.UseAuthentication();
