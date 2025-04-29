@@ -26,7 +26,8 @@ namespace Movies.Api.Minimal.Endpoints.Movies
                 var response = movie.MapToMovieResponse();
                 return TypedResults.Ok(response);
             })
-                .WithName(Name);
+                .WithName(Name)
+                .RequireAuthorization();
         }
     }
 }

@@ -23,7 +23,8 @@ namespace Movies.Api.Minimal.Endpoints.Movies
                 return TypedResults.Ok(movies.MapToMoviesResponse(request.Page.GetValueOrDefault(MinApiPagedRequest.DefaultPage)
                     , request.PageSize.GetValueOrDefault(MinApiPagedRequest.DefaultPageSize), total));
             })
-                .WithName(Name);
+                .WithName(Name)
+                .RequireAuthorization(AuthConstants.MultiAuthPolicyName);
         }
     }
 }

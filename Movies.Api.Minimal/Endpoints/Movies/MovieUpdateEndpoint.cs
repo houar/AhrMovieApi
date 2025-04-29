@@ -29,7 +29,8 @@ namespace Movies.Api.Minimal.Endpoints.Movies
                 await outputCacheStore.EvictByTagAsync("movie-get-all", token);
                 return TypedResults.Ok(updated.MapToMovieResponse());
             })
-            .WithName(Name);
+                .WithName(Name)
+                .RequireAuthorization(AuthConstants.AdminOrTrustedPolicyName);
         }
     }
 }

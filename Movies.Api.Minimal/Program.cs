@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Movies.Api.Auth;
+using Movies.Api.Minimal.Auth;
 using Movies.Api.Minimal.Endpoints;
 using Movies.Api.Minimal.Mapping;
 using Movies.Api.Minimal.OutputCache;
@@ -31,6 +32,24 @@ builder.Services
             ValidAudience = aud
         };
     });
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(AuthConstants.AdminUserPolicyName, policy =>
+    {
+        //policy.RequireAuthenticatedUser();
+        policy.RequireClaim(AuthConstants.AdminUserClaimName, AuthConstants.AdminUserClaimValue);
+    });
+    options.AddPolicy(AuthConstants.AdminOrTrustedPolicyName, policy =>
+    {
+        policy.RequireAssertion(ctx =>
+        ctx.User.HasClaim(claim => claim is { Type: AuthConstants.AdminUserClaimName, Value: AuthConstants.AdminUserClaimValue }) ||
+        ctx.User.HasClaim(claim => claim is { Type: AuthConstants.TrustedMemberClaimName, Value: AuthConstants.TrustedMemberClaimValue }));
+    });
+    options.AddPolicy(AuthConstants.MultiAuthPolicyName, policy =>
+    {
+        policy.Requirements.Add(new MultiAuthRequirement(config["ApiKey"]));
+    });
+});
 builder.Services.AddMoviesApplication();
 builder.Services.AddMoviesDatabase(connectionString);
 builder.Services.AddResponseCaching();
@@ -54,6 +73,7 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
+app.UseAuthorization();
 app.UseResponseCaching();
 app.UseOutputCache();
 app.UseMiddleware<ValidationMappingMiddleware>();

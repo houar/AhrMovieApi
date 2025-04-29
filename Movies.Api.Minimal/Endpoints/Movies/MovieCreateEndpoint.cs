@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.OutputCaching;
+using Movies.Api.Minimal.Auth;
 using Movies.Api.Minimal.Mapping;
 using Movies.Application.Services;
 using Movies.Contracts.Requests.V1;
@@ -28,7 +29,8 @@ namespace Movies.Api.Minimal.Endpoints.Movies
                 await outputCacheStore.EvictByTagAsync("movie-get-all", token);
                 return TypedResults.CreatedAtRoute(movie.MapToMovieResponse(), MovieGetEndpoint.Name, new { idOrSlug = movie.Id });
             })
-            .WithName(Name);
+                .WithName(Name)
+                .RequireAuthorization(AuthConstants.AdminOrTrustedPolicyName);
         }
     }
 }
