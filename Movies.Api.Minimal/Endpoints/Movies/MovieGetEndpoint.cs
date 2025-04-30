@@ -29,6 +29,7 @@ namespace Movies.Api.Minimal.Endpoints.Movies
                 .WithName(Name)
                 .Produces(StatusCodes.Status200OK)
                 .Produces(StatusCodes.Status404NotFound)
+                .CacheOutput("MovieGetWithUserRat")
                 .WithApiVersionSet(ApiVersioning.VersionSet)
                 .RequireAuthorization();
         }

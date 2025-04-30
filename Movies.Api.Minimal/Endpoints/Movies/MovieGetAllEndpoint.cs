@@ -25,6 +25,7 @@ namespace Movies.Api.Minimal.Endpoints.Movies
             })
                 .WithName(Name)
                 .Produces(StatusCodes.Status200OK)
+                .CacheOutput("MovieGetAll")
                 .WithApiVersionSet(ApiVersioning.VersionSet)
                 .HasApiVersion(1.0)
                 .RequireAuthorization(AuthConstants.MultiAuthPolicyName);
@@ -43,6 +44,7 @@ namespace Movies.Api.Minimal.Endpoints.Movies
             })
                 .WithName($"{Name}V2")
                 .Produces(StatusCodes.Status200OK)
+                .CacheOutput("MovieGetAll")
                 .WithApiVersionSet(ApiVersioning.VersionSet)
                 .HasApiVersion(2.0)
                 .RequireAuthorization(AuthConstants.MultiAuthPolicyName);
