@@ -26,6 +26,7 @@ namespace Movies.Api.Minimal.Endpoints.Movies
                 .WithName(Name)
                 .Produces(StatusCodes.Status204NoContent)
                 .Produces(StatusCodes.Status404NotFound)
+                .WithApiVersionSet(ApiVersioning.VersionSet)
                 .RequireAuthorization(AuthConstants.AdminUserPolicyName);
         }
     }

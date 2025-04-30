@@ -32,6 +32,7 @@ namespace Movies.Api.Minimal.Endpoints.Ratings
                 .WithName(Name)
                 .Produces(StatusCodes.Status200OK, typeof(RatingsResponse))
                 .Produces(StatusCodes.Status401Unauthorized)
+                .WithApiVersionSet(ApiVersioning.VersionSet)
                 // Only for demo purposes
                 .AddEndpointFilter<ApiKeyAuthFilter>();
         }

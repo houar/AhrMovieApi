@@ -89,6 +89,7 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
+app.CreateApiVersionSet();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

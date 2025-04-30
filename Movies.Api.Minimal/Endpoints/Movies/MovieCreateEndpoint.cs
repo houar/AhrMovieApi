@@ -35,6 +35,7 @@ namespace Movies.Api.Minimal.Endpoints.Movies
                 .Produces(StatusCodes.Status201Created, typeof(MovieResponse))
                 .Produces(StatusCodes.Status500InternalServerError)
                 .Produces(StatusCodes.Status400BadRequest, typeof(ValidationFailureResponse))
+                .WithApiVersionSet(ApiVersioning.VersionSet)
                 .RequireAuthorization(AuthConstants.AdminOrTrustedPolicyName);
         }
     }
