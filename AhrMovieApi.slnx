@@ -21,4 +21,18 @@
     <File Path="Helpers/Course.postman_collection.json" />
     <File Path="Helpers/movies.json" />
   </Folder>
+  <Folder Name="/Helpers/AhoItems/Postman/">
+    <File Path="Helpers/AhoItems/Postman/AhoPostmanCollection.json" />
+    <File Path="Helpers/AhoItems/Postman/prescript.js" />
+  </Folder>
+  <Folder Name="/Helpers/AhoItems/SQL/">
+    <File Path="Helpers/AhoItems/SQL/jsn-newmovies.json" />
+    <File Path="Helpers/AhoItems/SQL/py-bulkload.py" />
+    <File Path="Helpers/AhoItems/SQL/py-duplicated.py" />
+    <File Path="Helpers/AhoItems/SQL/sq-01-creation-script.sql" />
+    <File Path="Helpers/AhoItems/SQL/sq-02-creation-script.sql" />
+    <File Path="Helpers/AhoItems/SQL/sq-03-check_indexes.sql" />
+    <File Path="Helpers/AhoItems/SQL/sq-04-script-check.sql" />
+    <File Path="Helpers/AhoItems/SQL/sq-05-select.sql" />
+  </Folder>
 </Solution>

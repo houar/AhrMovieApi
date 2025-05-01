@@ -1,0 +1,2941 @@
+{
+	"info": {
+		"_postman_id": "56b675e9-cf58-4519-a40e-164903225e32",
+		"name": "EXPORTS - From Zero to Hero: REST APIs in .NET",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Identity",
+			"item": [
+				{
+					"name": "Token Generator",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userid\": \"d8566de3-b1a6-4a9b-b842-8e3887a82e41\",\r\n    \"email\": \"madjid@houar.eu\",\r\n    \"customClaims\": {\r\n         \"admin\": true,\r\n         \"trusted_member\": true\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:{{DOMT-RESTAPI-PORTTOK}}/api/token",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{DOMT-RESTAPI-PORTTOK}}",
+							"path": [
+								"api",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Movies",
+			"item": [
+				{
+					"name": "Other Users",
+					"item": [
+						{
+							"name": "Get movie - id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/26e3b929-9049-4a4b-8314-a1fe589698b9",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"26e3b929-9049-4a4b-8314-a1fe589698b9"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get movie - slug",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/nick-the-greek-2023?includelinks=true",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"nick-the-greek-2023"
+									],
+									"query": [
+										{
+											"key": "includelinks",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all movies",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create movie (403)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"Title\": \"Nick the Greek 2\",\r\n    \"YearOfRelease\": 2023,\r\n    \"Genres\": [\r\n      \"Comedy\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update movie (403)",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"26e3b929-9049-4a4b-8314-a1fe589698b9\",\r\n    \"title\": \"Nick the Greek 2\",\r\n    \"slug\": \"nick-the-greek-2-2023\",\r\n    \"yearOfRelease\": 2023,\r\n    \"genres\": [\r\n        \"Comedy\",\r\n        \"Fiction\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/26e3b929-9049-4a4b-8314-a1fe589698b9",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"26e3b929-9049-4a4b-8314-a1fe589698b9"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete movie (403)",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/c58b086c-28b7-4d8d-babc-07502b7a89de",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"c58b086c-28b7-4d8d-babc-07502b7a89de"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");",
+									"const tokenUrl = `https://localhost:${port}/api/token`;",
+									"",
+									"const getTokenRequest = {",
+									"    url: tokenUrl,",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type': 'application/json'",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            userid: 'd8566de3-b1a6-4a9b-b842-8e3887a82e41',",
+									"            email: 'madjid@houar.eu',",
+									"            customClaims: {",
+									"                 admin: false,",
+									"                 trusted_member: false",
+									"            }",
+									"        })",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest(getTokenRequest, function (err, res) {",
+									"    if (err) {",
+									"        console.error('Token request failed:', err);",
+									"    } else {",
+									"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());",
+									"    }",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Trusted Member",
+					"item": [
+						{
+							"name": "Get movie - id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/8b730350-25cd-48e5-bf38-7b8d16777abd",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"8b730350-25cd-48e5-bf38-7b8d16777abd"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get movie - slug",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/nick-the-greek-2023",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"nick-the-greek-2023"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all movies",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create movie",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"Title\": \"Nick the Greek 3\",\r\n    \"YearOfRelease\": 2025,\r\n    \"Genres\": [\r\n      \"Comedy\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update movie - 1",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"8b730350-25cd-48e5-bf38-7b8d16777abd\",\r\n    \"title\": \"Nick the Greek\",\r\n    \"slug\": \"nick-the-greek-2023\",\r\n    \"yearOfRelease\": 2023,\r\n    \"genres\": [\r\n        \"Comedy\",\r\n        \"Thriller\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/8b730350-25cd-48e5-bf38-7b8d16777abd",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"8b730350-25cd-48e5-bf38-7b8d16777abd"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update movie - 2",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"26e3b929-9049-4a4b-8314-a1fe589698b9\",\r\n    \"title\": \"Nick the Greek 2\",\r\n    \"slug\": \"nick-the-greek-2-2025\",\r\n    \"yearOfRelease\": 2025,\r\n    \"genres\": [\r\n        \"Comedy\",\r\n        \"Fiction\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/26e3b929-9049-4a4b-8314-a1fe589698b9",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"26e3b929-9049-4a4b-8314-a1fe589698b9"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete movie (403)",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/c58b086c-28b7-4d8d-babc-07502b7a89de",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"c58b086c-28b7-4d8d-babc-07502b7a89de"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");",
+									"const tokenUrl = `https://localhost:${port}/api/token`;",
+									"",
+									"const getTokenRequest = {",
+									"    url: tokenUrl,",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type': 'application/json'",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            userid: 'd8566de3-b1a6-4a9b-b842-8e3887a82e41',",
+									"            email: 'madjid@houar.eu',",
+									"            customClaims: {",
+									"                admin: false,",
+									"                trusted_member: true",
+									"            }",
+									"        })",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest(getTokenRequest, function (err, res) {",
+									"    if (err) {",
+									"        console.error('Token request failed:', err);",
+									"    } else {",
+									"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());",
+									"    }",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "Get movie - id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/8b730350-25cd-48e5-bf38-7b8d16777abd",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"8b730350-25cd-48e5-bf38-7b8d16777abd"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get movie - slug",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/nick-the-greek-2023",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"nick-the-greek-2023"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all movies",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create movie",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"Title\": \"Nick the Greek 3\",\r\n    \"YearOfRelease\": 2024,\r\n    \"Genres\": [\r\n      \"Comedy\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update movie",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"26e3b929-9049-4a4b-8314-a1fe589698b9\",\r\n    \"title\": \"Nick the Greek 2\",\r\n    \"slug\": \"nick-the-greek-2-2023\",\r\n    \"yearOfRelease\": 2023,\r\n    \"genres\": [\r\n        \"Comedy\",\r\n        \"Fiction\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/26e3b929-9049-4a4b-8314-a1fe589698b9",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"26e3b929-9049-4a4b-8314-a1fe589698b9"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete movie",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/cb364209-9523-44bd-ba19-df14ea228ca4",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"cb364209-9523-44bd-ba19-df14ea228ca4"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");",
+									"const tokenUrl = `https://localhost:${port}/api/token`;",
+									"",
+									"const getTokenRequest = {",
+									"    url: tokenUrl,",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type': 'application/json'",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            userid: 'd8566de3-b1a6-4a9b-b842-8e3887a82e41',",
+									"            email: 'madjid@houar.eu',",
+									"            customClaims: {",
+									"                admin: true",
+									"            }",
+									"        })",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest(getTokenRequest, function (err, res) {",
+									"    if (err) {",
+									"        console.error('Token request failed:', err);",
+									"    } else {",
+									"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());",
+									"    }",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Advanced Features",
+					"item": [
+						{
+							"name": "Get all movies - basic",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all movies - filter",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies?title=nick&filter=nick",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies"
+									],
+									"query": [
+										{
+											"key": "title",
+											"value": "nick"
+										},
+										{
+											"key": "filter",
+											"value": "nick"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all movies - sortby",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies?sortby=-year",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies"
+									],
+									"query": [
+										{
+											"key": "sortby",
+											"value": "-year"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all movies - pagination - err",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies?sortby=-year&page=0&pagesize=100",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies"
+									],
+									"query": [
+										{
+											"key": "sortby",
+											"value": "-year"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "pagesize",
+											"value": "100"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all movies - pagination - ok",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies?year=1995&sortby=-title&page=3&pagesize=20",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies"
+									],
+									"query": [
+										{
+											"key": "year",
+											"value": "1995"
+										},
+										{
+											"key": "sortby",
+											"value": "-title"
+										},
+										{
+											"key": "page",
+											"value": "3"
+										},
+										{
+											"key": "pagesize",
+											"value": "20"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get movie - hateoas",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/nick-the-greek-2023?includelinks=true",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"nick-the-greek-2023"
+									],
+									"query": [
+										{
+											"key": "includelinks",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all movies - versioning",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies?api-version=2.0",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies"
+									],
+									"query": [
+										{
+											"key": "api-version",
+											"value": "2.0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all movies - versioning - x-header",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": " application/json; x-api-version=2.0",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json; x-api-version=2.0",
+										"type": "text",
+										"disabled": true
+									},
+									{
+										"key": "x-api-version",
+										"value": "2.0",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all movies - health",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/_health",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"_health"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get movie - slug (Response Cache)",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/nick-the-greek-2023?api-version=2.0",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"nick-the-greek-2023"
+									],
+									"query": [
+										{
+											"key": "api-version",
+											"value": "2.0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all movies - (Response Cache)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies?api-version=2.0&year=1995&sortby=-title&page=3&pagesize=20",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies"
+									],
+									"query": [
+										{
+											"key": "api-version",
+											"value": "2.0"
+										},
+										{
+											"key": "year",
+											"value": "1995"
+										},
+										{
+											"key": "sortby",
+											"value": "-title"
+										},
+										{
+											"key": "page",
+											"value": "3"
+										},
+										{
+											"key": "pagesize",
+											"value": "20"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get movie - slug (Output Cache)",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-api-key",
+										"value": "51ed4915-3d70-456e-9cb6-9d15ddbc5002",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/nick-the-greek-2023?api-version=3.0",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"nick-the-greek-2023"
+									],
+									"query": [
+										{
+											"key": "api-version",
+											"value": "3.0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create movie - (Output Cache)",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");\r",
+											"const tokenUrl = `https://localhost:${port}/api/token`;\r",
+											"\r",
+											"const getTokenRequest = {\r",
+											"    url: tokenUrl,\r",
+											"    method: 'POST',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json'\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            userid: 'd8566de3-b1a6-4a9b-b842-8e3887a82e41',\r",
+											"            email: 'madjid@houar.eu',\r",
+											"            customClaims: {\r",
+											"                admin: true\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getTokenRequest, function (err, res) {\r",
+											"    if (err) {\r",
+											"        console.error('Token request failed:', err);\r",
+											"    } else {\r",
+											"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"Title\": \"Nick the Greek 000\",\r\n    \"YearOfRelease\": 2020,\r\n    \"Genres\": [\r\n      \"Comedy\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete movie -  (Output Cache)",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");\r",
+											"const tokenUrl = `https://localhost:${port}/api/token`;\r",
+											"\r",
+											"const getTokenRequest = {\r",
+											"    url: tokenUrl,\r",
+											"    method: 'POST',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json'\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            userid: 'd8566de3-b1a6-4a9b-b842-8e3887a82e41',\r",
+											"            email: 'madjid@houar.eu',\r",
+											"            customClaims: {\r",
+											"                admin: true\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getTokenRequest, function (err, res) {\r",
+											"    if (err) {\r",
+											"        console.error('Token request failed:', err);\r",
+											"    } else {\r",
+											"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/ad2a4e31-1b59-4180-abe3-2c3c3644c8a6",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"ad2a4e31-1b59-4180-abe3-2c3c3644c8a6"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all movies - (Output Cache)",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-api-key",
+										"value": "51ed4915-3d70-456e-9cb6-9d15ddbc5002",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies?api-version=3.0&title=nick the greek&sortby=-year&page=1&pagesize=13",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies"
+									],
+									"query": [
+										{
+											"key": "api-version",
+											"value": "3.0"
+										},
+										{
+											"key": "title",
+											"value": "nick the greek"
+										},
+										{
+											"key": "sortby",
+											"value": "-year"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "pagesize",
+											"value": "13"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get movie - api-key auth",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-api-key",
+										"value": "51ed4915-3d70-456e-9cb6-9d15ddbc5002",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/nick-the-greek-2023?api-version=3.0",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"nick-the-greek-2023"
+									],
+									"query": [
+										{
+											"key": "api-version",
+											"value": "3.0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create movie - multi-auth (PREP)",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");\r",
+											"const tokenUrl = `https://localhost:${port}/api/token`;\r",
+											"\r",
+											"const getTokenRequest = {\r",
+											"    url: tokenUrl,\r",
+											"    method: 'POST',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json'\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            userid: 'd8566de3-b1a6-4a9b-b842-8e3887a82e41',\r",
+											"            email: 'madjid@houar.eu',\r",
+											"            customClaims: {\r",
+											"                admin: true\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getTokenRequest, function (err, res) {\r",
+											"    if (err) {\r",
+											"        console.error('Token request failed:', err);\r",
+											"    } else {\r",
+											"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"Title\": \"Nick the Greek XXX\",\r\n    \"YearOfRelease\": 2020,\r\n    \"Genres\": [\r\n      \"Comedy\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete movie - multi-auth (JWT)",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");\r",
+											"const tokenUrl = `https://localhost:${port}/api/token`;\r",
+											"\r",
+											"const getTokenRequest = {\r",
+											"    url: tokenUrl,\r",
+											"    method: 'POST',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json'\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            userid: 'd8566de3-b1a6-4a9b-b842-8e3887a82e41',\r",
+											"            email: 'madjid@houar.eu',\r",
+											"            customClaims: {\r",
+											"                admin: true\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getTokenRequest, function (err, res) {\r",
+											"    if (err) {\r",
+											"        console.error('Token request failed:', err);\r",
+											"    } else {\r",
+											"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/283c85fe-730f-4822-9a97-d4da7e106efa?api-version=3.0",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"283c85fe-730f-4822-9a97-d4da7e106efa"
+									],
+									"query": [
+										{
+											"key": "api-version",
+											"value": "3.0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete movie - multi-auth (APIK)",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "x-api-key",
+										"value": "51ed4915-3d70-456e-9cb6-9d15ddbc5002",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/9ba32db8-4501-4756-a9d1-5ab1947e92b2?api-version=3.0",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"9ba32db8-4501-4756-a9d1-5ab1947e92b2"
+									],
+									"query": [
+										{
+											"key": "api-version",
+											"value": "3.0"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");",
+									"const tokenUrl = `https://localhost:${port}/api/token`;",
+									"",
+									"const getTokenRequest = {",
+									"    url: tokenUrl,",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type': 'application/json'",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            userid: 'd8566de3-b1a6-4a9b-b842-8e3887a82e41',",
+									"            email: 'madjid@houar.eu',",
+									"            customClaims: {",
+									"                 admin: false,",
+									"                 trusted_member: false",
+									"            }",
+									"        })",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest(getTokenRequest, function (err, res) {",
+									"    if (err) {",
+									"        console.error('Token request failed:', err);",
+									"    } else {",
+									"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());",
+									"    }",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Ratings",
+			"item": [
+				{
+					"name": "Rate movie - user 1 - movie 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");\r",
+									"const tokenUrl = `https://localhost:${port}/api/token`;\r",
+									"\r",
+									"const getTokenRequest = {\r",
+									"    url: tokenUrl,\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/json'\r",
+									"    },\r",
+									"    body: {\r",
+									"        mode: 'raw',\r",
+									"        raw: JSON.stringify({\r",
+									"            userid: 'd8566de3-b1a6-4a9b-b842-8e3887a82e41', //User 1\r",
+									"            email: 'user1@houar.eu',\r",
+									"            customClaims: {\r",
+									"                 admin: false,\r",
+									"                 trusted_member: false\r",
+									"            }\r",
+									"        })\r",
+									"    }\r",
+									"};\r",
+									"\r",
+									"pm.sendRequest(getTokenRequest, function (err, res) {\r",
+									"    if (err) {\r",
+									"        console.error('Token request failed:', err);\r",
+									"    } else {\r",
+									"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rating\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/8b730350-25cd-48e5-bf38-7b8d16777abd/ratings",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{DOMT-RESTAPI-PORTAPI}}",
+							"path": [
+								"api",
+								"movies",
+								"8b730350-25cd-48e5-bf38-7b8d16777abd",
+								"ratings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rate movie - user 1 - movie 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");\r",
+									"const tokenUrl = `https://localhost:${port}/api/token`;\r",
+									"\r",
+									"const getTokenRequest = {\r",
+									"    url: tokenUrl,\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/json'\r",
+									"    },\r",
+									"    body: {\r",
+									"        mode: 'raw',\r",
+									"        raw: JSON.stringify({\r",
+									"            userid: 'd8566de3-b1a6-4a9b-b842-8e3887a82e41', //User 1\r",
+									"            email: 'user1@houar.eu',\r",
+									"            customClaims: {\r",
+									"                 admin: false,\r",
+									"                 trusted_member: false\r",
+									"            }\r",
+									"        })\r",
+									"    }\r",
+									"};\r",
+									"\r",
+									"pm.sendRequest(getTokenRequest, function (err, res) {\r",
+									"    if (err) {\r",
+									"        console.error('Token request failed:', err);\r",
+									"    } else {\r",
+									"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rating\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/26e3b929-9049-4a4b-8314-a1fe589698b9/ratings",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{DOMT-RESTAPI-PORTAPI}}",
+							"path": [
+								"api",
+								"movies",
+								"26e3b929-9049-4a4b-8314-a1fe589698b9",
+								"ratings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Rate movie - user 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");\r",
+									"const tokenUrl = `https://localhost:${port}/api/token`;\r",
+									"\r",
+									"const getTokenRequest = {\r",
+									"    url: tokenUrl,\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/json'\r",
+									"    },\r",
+									"    body: {\r",
+									"        mode: 'raw',\r",
+									"        raw: JSON.stringify({\r",
+									"            userid: '2d4a4af9-695a-4db5-bf77-9eb9e9002484', //User 2\r",
+									"            email: 'user2@houar.eu',\r",
+									"            customClaims: {\r",
+									"                 admin: false,\r",
+									"                 trusted_member: false\r",
+									"            }\r",
+									"        })\r",
+									"    }\r",
+									"};\r",
+									"\r",
+									"pm.sendRequest(getTokenRequest, function (err, res) {\r",
+									"    if (err) {\r",
+									"        console.error('Token request failed:', err);\r",
+									"    } else {\r",
+									"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rating\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/26e3b929-9049-4a4b-8314-a1fe589698b9/ratings",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{DOMT-RESTAPI-PORTAPI}}",
+							"path": [
+								"api",
+								"movies",
+								"26e3b929-9049-4a4b-8314-a1fe589698b9",
+								"ratings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get ratings - user 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");\r",
+									"const tokenUrl = `https://localhost:${port}/api/token`;\r",
+									"\r",
+									"const getTokenRequest = {\r",
+									"    url: tokenUrl,\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/json'\r",
+									"    },\r",
+									"    body: {\r",
+									"        mode: 'raw',\r",
+									"        raw: JSON.stringify({\r",
+									"            userid: 'd8566de3-b1a6-4a9b-b842-8e3887a82e41', //User 1\r",
+									"            email: 'user1@houar.eu',\r",
+									"            customClaims: {\r",
+									"                 admin: false,\r",
+									"                 trusted_member: false\r",
+									"            }\r",
+									"        })\r",
+									"    }\r",
+									"};\r",
+									"\r",
+									"pm.sendRequest(getTokenRequest, function (err, res) {\r",
+									"    if (err) {\r",
+									"        console.error('Token request failed:', err);\r",
+									"    } else {\r",
+									"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/ratings/me",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{DOMT-RESTAPI-PORTAPI}}",
+							"path": [
+								"api",
+								"ratings",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get ratings - user 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");\r",
+									"const tokenUrl = `https://localhost:${port}/api/token`;\r",
+									"\r",
+									"const getTokenRequest = {\r",
+									"    url: tokenUrl,\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/json'\r",
+									"    },\r",
+									"    body: {\r",
+									"        mode: 'raw',\r",
+									"        raw: JSON.stringify({\r",
+									"            userid: '2d4a4af9-695a-4db5-bf77-9eb9e9002484', //User 2\r",
+									"            email: 'user2@houar.eu',\r",
+									"            customClaims: {\r",
+									"                 admin: false,\r",
+									"                 trusted_member: false\r",
+									"            }\r",
+									"        })\r",
+									"    }\r",
+									"};\r",
+									"\r",
+									"pm.sendRequest(getTokenRequest, function (err, res) {\r",
+									"    if (err) {\r",
+									"        console.error('Token request failed:', err);\r",
+									"    } else {\r",
+									"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/ratings/me",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{DOMT-RESTAPI-PORTAPI}}",
+							"path": [
+								"api",
+								"ratings",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete rating - user 1",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");\r",
+									"const tokenUrl = `https://localhost:${port}/api/token`;\r",
+									"\r",
+									"const getTokenRequest = {\r",
+									"    url: tokenUrl,\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/json'\r",
+									"    },\r",
+									"    body: {\r",
+									"        mode: 'raw',\r",
+									"        raw: JSON.stringify({\r",
+									"            userid: 'd8566de3-b1a6-4a9b-b842-8e3887a82e41', //User 1\r",
+									"            email: 'user1@houar.eu',\r",
+									"            customClaims: {\r",
+									"                 admin: false,\r",
+									"                 trusted_member: false\r",
+									"            }\r",
+									"        })\r",
+									"    }\r",
+									"};\r",
+									"\r",
+									"pm.sendRequest(getTokenRequest, function (err, res) {\r",
+									"    if (err) {\r",
+									"        console.error('Token request failed:', err);\r",
+									"    } else {\r",
+									"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/26e3b929-9049-4a4b-8314-a1fe589698b9/ratings",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{DOMT-RESTAPI-PORTAPI}}",
+							"path": [
+								"api",
+								"movies",
+								"26e3b929-9049-4a4b-8314-a1fe589698b9",
+								"ratings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete rating - user 2",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");\r",
+									"const tokenUrl = `https://localhost:${port}/api/token`;\r",
+									"\r",
+									"const getTokenRequest = {\r",
+									"    url: tokenUrl,\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/json'\r",
+									"    },\r",
+									"    body: {\r",
+									"        mode: 'raw',\r",
+									"        raw: JSON.stringify({\r",
+									"            userid: '2d4a4af9-695a-4db5-bf77-9eb9e9002484', //User 2\r",
+									"            email: 'user2@houar.eu',\r",
+									"            customClaims: {\r",
+									"                 admin: false,\r",
+									"                 trusted_member: false\r",
+									"            }\r",
+									"        })\r",
+									"    }\r",
+									"};\r",
+									"\r",
+									"pm.sendRequest(getTokenRequest, function (err, res) {\r",
+									"    if (err) {\r",
+									"        console.error('Token request failed:', err);\r",
+									"    } else {\r",
+									"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:{{DOMT-RESTAPI-PORTAPI}}/api/movies/26e3b929-9049-4a4b-8314-a1fe589698b9/ratings",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "{{DOMT-RESTAPI-PORTAPI}}",
+							"path": [
+								"api",
+								"movies",
+								"26e3b929-9049-4a4b-8314-a1fe589698b9",
+								"ratings"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");",
+							"const tokenUrl = `https://localhost:${port}/api/token`;",
+							"",
+							"const getTokenRequest = {",
+							"    url: tokenUrl,",
+							"    method: 'POST',",
+							"    header: {",
+							"        'Content-Type': 'application/json'",
+							"    },",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({",
+							"            userid: 'd8566de3-b1a6-4a9b-b842-8e3887a82e41',",
+							"            email: 'madjid@houar.eu',",
+							"            customClaims: {",
+							"                 admin: false,",
+							"                 trusted_member: false",
+							"            }",
+							"        })",
+							"    }",
+							"};",
+							"",
+							"pm.sendRequest(getTokenRequest, function (err, res) {",
+							"    if (err) {",
+							"        console.error('Token request failed:', err);",
+							"    } else {",
+							"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());",
+							"    }",
+							"});"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "MInimalApi",
+			"item": [
+				{
+					"name": "Movies - Min",
+					"item": [
+						{
+							"name": "Admin",
+							"item": [
+								{
+									"name": "Get movie - id",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://localhost:{{DOMT-RESTAPI-MINI-PORTAPI}}/api/movies/58c4fb1b-b36d-4d1a-b62d-87dc1b18fedf",
+											"protocol": "https",
+											"host": [
+												"localhost"
+											],
+											"port": "{{DOMT-RESTAPI-MINI-PORTAPI}}",
+											"path": [
+												"api",
+												"movies",
+												"58c4fb1b-b36d-4d1a-b62d-87dc1b18fedf"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get movie - slug",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://localhost:{{DOMT-RESTAPI-MINI-PORTAPI}}/api/movies/nick-the-greek-funko-3-2024",
+											"protocol": "https",
+											"host": [
+												"localhost"
+											],
+											"port": "{{DOMT-RESTAPI-MINI-PORTAPI}}",
+											"path": [
+												"api",
+												"movies",
+												"nick-the-greek-funko-3-2024"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get all movies - Auth : Bearer",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://localhost:{{DOMT-RESTAPI-MINI-PORTAPI}}/api/movies?title=fall",
+											"protocol": "https",
+											"host": [
+												"localhost"
+											],
+											"port": "{{DOMT-RESTAPI-MINI-PORTAPI}}",
+											"path": [
+												"api",
+												"movies"
+											],
+											"query": [
+												{
+													"key": "title",
+													"value": "fall"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get all movies - Auth : API KEY - Out Cache",
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "value",
+													"value": "51ed4915-3d70-456e-9cb6-9d15ddbc5002",
+													"type": "string"
+												},
+												{
+													"key": "key",
+													"value": "x-api-key",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://localhost:{{DOMT-RESTAPI-MINI-PORTAPI}}/api/movies?title=fall",
+											"protocol": "https",
+											"host": [
+												"localhost"
+											],
+											"port": "{{DOMT-RESTAPI-MINI-PORTAPI}}",
+											"path": [
+												"api",
+												"movies"
+											],
+											"query": [
+												{
+													"key": "title",
+													"value": "fall"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get all movies - V2 - Out Cache",
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "value",
+													"value": "51ed4915-3d70-456e-9cb6-9d15ddbc5002",
+													"type": "string"
+												},
+												{
+													"key": "key",
+													"value": "x-api-key",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "https://localhost:{{DOMT-RESTAPI-MINI-PORTAPI}}/api/movies?title=fall&api-version=2",
+											"protocol": "https",
+											"host": [
+												"localhost"
+											],
+											"port": "{{DOMT-RESTAPI-MINI-PORTAPI}}",
+											"path": [
+												"api",
+												"movies"
+											],
+											"query": [
+												{
+													"key": "title",
+													"value": "fall"
+												},
+												{
+													"key": "api-version",
+													"value": "2"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create movie",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n   \"Title\": \"Nick the Greek FUNKO 3\",\r\n    \"YearOfRelease\": 2024,\r\n    \"Genres\": [\r\n      \"Comedy\",\r\n      \"FUNK\"\r\n    ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://localhost:{{DOMT-RESTAPI-MINI-PORTAPI}}/api/movies",
+											"protocol": "https",
+											"host": [
+												"localhost"
+											],
+											"port": "{{DOMT-RESTAPI-MINI-PORTAPI}}",
+											"path": [
+												"api",
+												"movies"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update movie",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": \"58c4fb1b-b36d-4d1a-b62d-87dc1b18fedf\",\r\n    \"title\": \"Nick the Greek FUNKO 3\",\r\n    \"slug\": \"nick-the-greek-funko-3-2024\",\r\n    \"rating\": null,\r\n    \"userRating\": null,\r\n    \"yearOfRelease\": 2024,\r\n    \"genres\": [\r\n        \"Comedy\",\r\n        \"FUNK\",\r\n        \"FUNK ++\"\r\n    ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://localhost:{{DOMT-RESTAPI-MINI-PORTAPI}}/api/movies/58c4fb1b-b36d-4d1a-b62d-87dc1b18fedf",
+											"protocol": "https",
+											"host": [
+												"localhost"
+											],
+											"port": "{{DOMT-RESTAPI-MINI-PORTAPI}}",
+											"path": [
+												"api",
+												"movies",
+												"58c4fb1b-b36d-4d1a-b62d-87dc1b18fedf"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete movie",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "https://localhost:{{DOMT-RESTAPI-MINI-PORTAPI}}/api/movies/a229f4f2-962e-4497-b597-75f356e98d11",
+											"protocol": "https",
+											"host": [
+												"localhost"
+											],
+											"port": "{{DOMT-RESTAPI-MINI-PORTAPI}}",
+											"path": [
+												"api",
+												"movies",
+												"a229f4f2-962e-4497-b597-75f356e98d11"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create movie - for delete",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n   \"Title\": \"Nick the Greek FUNKO XTREME\",\r\n    \"YearOfRelease\": 2024,\r\n    \"Genres\": [\r\n      \"Comedy\",\r\n      \"FUNK\"\r\n    ]\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://localhost:{{DOMT-RESTAPI-MINI-PORTAPI}}/api/movies",
+											"protocol": "https",
+											"host": [
+												"localhost"
+											],
+											"port": "{{DOMT-RESTAPI-MINI-PORTAPI}}",
+											"path": [
+												"api",
+												"movies"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");",
+											"const tokenUrl = `https://localhost:${port}/api/token`;",
+											"",
+											"const getTokenRequest = {",
+											"    url: tokenUrl,",
+											"    method: 'POST',",
+											"    header: {",
+											"        'Content-Type': 'application/json'",
+											"    },",
+											"    body: {",
+											"        mode: 'raw',",
+											"        raw: JSON.stringify({",
+											"            userid: 'd8566de3-b1a6-4a9b-b842-8e3887a82e41',",
+											"            email: 'madjid@houar.eu',",
+											"            customClaims: {",
+											"                admin: true",
+											"            }",
+											"        })",
+											"    }",
+											"};",
+											"",
+											"pm.sendRequest(getTokenRequest, function (err, res) {",
+											"    if (err) {",
+											"        console.error('Token request failed:', err);",
+											"    } else {",
+											"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());",
+											"    }",
+											"});"
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Ratings - Min",
+					"item": [
+						{
+							"name": "Rate movie - user 1 - movie 1",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");\r",
+											"const tokenUrl = `https://localhost:${port}/api/token`;\r",
+											"\r",
+											"const getTokenRequest = {\r",
+											"    url: tokenUrl,\r",
+											"    method: 'POST',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json'\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            userid: 'd8566de3-b1a6-4a9b-b842-8e3887a82e41', //User 1\r",
+											"            email: 'user1@houar.eu',\r",
+											"            customClaims: {\r",
+											"                 admin: false,\r",
+											"                 trusted_member: false\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getTokenRequest, function (err, res) {\r",
+											"    if (err) {\r",
+											"        console.error('Token request failed:', err);\r",
+											"    } else {\r",
+											"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"rating\": 5\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-MINI-PORTAPI}}/api/movies/8b730350-25cd-48e5-bf38-7b8d16777abd/ratings",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-MINI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"8b730350-25cd-48e5-bf38-7b8d16777abd",
+										"ratings"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Rate movie - user 1 - movie 2",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");\r",
+											"const tokenUrl = `https://localhost:${port}/api/token`;\r",
+											"\r",
+											"const getTokenRequest = {\r",
+											"    url: tokenUrl,\r",
+											"    method: 'POST',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json'\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            userid: 'd8566de3-b1a6-4a9b-b842-8e3887a82e41', //User 1\r",
+											"            email: 'user1@houar.eu',\r",
+											"            customClaims: {\r",
+											"                 admin: false,\r",
+											"                 trusted_member: false\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getTokenRequest, function (err, res) {\r",
+											"    if (err) {\r",
+											"        console.error('Token request failed:', err);\r",
+											"    } else {\r",
+											"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"rating\": 3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-MINI-PORTAPI}}/api/movies/26e3b929-9049-4a4b-8314-a1fe589698b9/ratings",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-MINI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"26e3b929-9049-4a4b-8314-a1fe589698b9",
+										"ratings"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Rate movie - user 2",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");\r",
+											"const tokenUrl = `https://localhost:${port}/api/token`;\r",
+											"\r",
+											"const getTokenRequest = {\r",
+											"    url: tokenUrl,\r",
+											"    method: 'POST',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json'\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            userid: '2d4a4af9-695a-4db5-bf77-9eb9e9002484', //User 2\r",
+											"            email: 'user2@houar.eu',\r",
+											"            customClaims: {\r",
+											"                 admin: false,\r",
+											"                 trusted_member: false\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getTokenRequest, function (err, res) {\r",
+											"    if (err) {\r",
+											"        console.error('Token request failed:', err);\r",
+											"    } else {\r",
+											"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"rating\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-MINI-PORTAPI}}/api/movies/26e3b929-9049-4a4b-8314-a1fe589698b9/ratings",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-MINI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"26e3b929-9049-4a4b-8314-a1fe589698b9",
+										"ratings"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get ratings - user 1",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");\r",
+											"const tokenUrl = `https://localhost:${port}/api/token`;\r",
+											"\r",
+											"const getTokenRequest = {\r",
+											"    url: tokenUrl,\r",
+											"    method: 'POST',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json'\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            userid: 'd8566de3-b1a6-4a9b-b842-8e3887a82e41', //User 1\r",
+											"            email: 'user1@houar.eu',\r",
+											"            customClaims: {\r",
+											"                 admin: false,\r",
+											"                 trusted_member: false\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getTokenRequest, function (err, res) {\r",
+											"    if (err) {\r",
+											"        console.error('Token request failed:', err);\r",
+											"    } else {\r",
+											"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "51ed4915-3d70-456e-9cb6-9d15ddbc5002",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "x-api-key",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+										"key": "Authorization",
+										"value": "Bearer {{DOMT-RESTAPI-AUTH-TOKEN}}",
+										"description": "To provide the user ID (only for demo)",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-MINI-PORTAPI}}/api/ratings/me",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-MINI-PORTAPI}}",
+									"path": [
+										"api",
+										"ratings",
+										"me"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get ratings - user 2",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");\r",
+											"const tokenUrl = `https://localhost:${port}/api/token`;\r",
+											"\r",
+											"const getTokenRequest = {\r",
+											"    url: tokenUrl,\r",
+											"    method: 'POST',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json'\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            userid: '2d4a4af9-695a-4db5-bf77-9eb9e9002484', //User 2\r",
+											"            email: 'user2@houar.eu',\r",
+											"            customClaims: {\r",
+											"                 admin: false,\r",
+											"                 trusted_member: false\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getTokenRequest, function (err, res) {\r",
+											"    if (err) {\r",
+											"        console.error('Token request failed:', err);\r",
+											"    } else {\r",
+											"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "51ed4915-3d70-456e-9cb6-9d15ddbc5002",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "x-api-key",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{DOMT-RESTAPI-AUTH-TOKEN}}",
+										"description": "To provide the user ID (only for demo)",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-MINI-PORTAPI}}/api/ratings/me",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-MINI-PORTAPI}}",
+									"path": [
+										"api",
+										"ratings",
+										"me"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete rating - user 1",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");\r",
+											"const tokenUrl = `https://localhost:${port}/api/token`;\r",
+											"\r",
+											"const getTokenRequest = {\r",
+											"    url: tokenUrl,\r",
+											"    method: 'POST',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json'\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            userid: 'd8566de3-b1a6-4a9b-b842-8e3887a82e41', //User 1\r",
+											"            email: 'user1@houar.eu',\r",
+											"            customClaims: {\r",
+											"                 admin: false,\r",
+											"                 trusted_member: false\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getTokenRequest, function (err, res) {\r",
+											"    if (err) {\r",
+											"        console.error('Token request failed:', err);\r",
+											"    } else {\r",
+											"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-MINI-PORTAPI}}/api/movies/26e3b929-9049-4a4b-8314-a1fe589698b9/ratings",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-MINI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"26e3b929-9049-4a4b-8314-a1fe589698b9",
+										"ratings"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete rating - user 2",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");\r",
+											"const tokenUrl = `https://localhost:${port}/api/token`;\r",
+											"\r",
+											"const getTokenRequest = {\r",
+											"    url: tokenUrl,\r",
+											"    method: 'POST',\r",
+											"    header: {\r",
+											"        'Content-Type': 'application/json'\r",
+											"    },\r",
+											"    body: {\r",
+											"        mode: 'raw',\r",
+											"        raw: JSON.stringify({\r",
+											"            userid: '2d4a4af9-695a-4db5-bf77-9eb9e9002484', //User 2\r",
+											"            email: 'user2@houar.eu',\r",
+											"            customClaims: {\r",
+											"                 admin: false,\r",
+											"                 trusted_member: false\r",
+											"            }\r",
+											"        })\r",
+											"    }\r",
+											"};\r",
+											"\r",
+											"pm.sendRequest(getTokenRequest, function (err, res) {\r",
+											"    if (err) {\r",
+											"        console.error('Token request failed:', err);\r",
+											"    } else {\r",
+											"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:{{DOMT-RESTAPI-MINI-PORTAPI}}/api/movies/26e3b929-9049-4a4b-8314-a1fe589698b9/ratings",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "{{DOMT-RESTAPI-MINI-PORTAPI}}",
+									"path": [
+										"api",
+										"movies",
+										"26e3b929-9049-4a4b-8314-a1fe589698b9",
+										"ratings"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"let port = pm.globals.get(\"DOMT-RESTAPI-PORTTOK\");",
+									"const tokenUrl = `https://localhost:${port}/api/token`;",
+									"",
+									"const getTokenRequest = {",
+									"    url: tokenUrl,",
+									"    method: 'POST',",
+									"    header: {",
+									"        'Content-Type': 'application/json'",
+									"    },",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            userid: 'd8566de3-b1a6-4a9b-b842-8e3887a82e41',",
+									"            email: 'madjid@houar.eu',",
+									"            customClaims: {",
+									"                 admin: false,",
+									"                 trusted_member: false",
+									"            }",
+									"        })",
+									"    }",
+									"};",
+									"",
+									"pm.sendRequest(getTokenRequest, function (err, res) {",
+									"    if (err) {",
+									"        console.error('Token request failed:', err);",
+									"    } else {",
+									"        pm.globals.set(\"DOMT-RESTAPI-AUTH-TOKEN\", res.text());",
+									"    }",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}
