@@ -35,4 +35,8 @@
     <File Path="Helpers/AhoItems/SQL/sq-04-script-check.sql" />
     <File Path="Helpers/AhoItems/SQL/sq-05-select.sql" />
   </Folder>
+  <Folder Name="/Helpers/AhoItems/Certificate/">
+    <File Path="Helpers/AhoItems/Certificate/Infos.md" />
+    <File Path="Helpers/AhoItems/Certificate/Madjid HOUAR - 2025-04-30.pdf" />
+  </Folder>
 </Solution>
